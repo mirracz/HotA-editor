@@ -1,8 +1,10 @@
 ﻿<Window x:Class="HotA_editor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="619" Width="837">
     <Grid>
-        
+        <TextBox x:Name="TextB" TextWrapping="Wrap" Height="497" VerticalAlignment="Top"/>
+        <Button Content="Działaj!" HorizontalAlignment="Left" Height="31" Margin="575,528,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click"/>
+
     </Grid>
 </Window>
