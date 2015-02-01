@@ -26,41 +26,43 @@ namespace HotA_editor
             InitializeComponent();
         }
 
-        const string fileName = "HotA.dat";
-
-        void WriteDefaultValues()
-        {
-            using (BinaryWriter writer = new BinaryWriter(File.Open(fileName, FileMode.Create)))
-            {
-                writer.Write(714);
-                writer.Write(@"c:\Temp" + Environment.NewLine + "dupa");
-                writer.Write(10);
-                writer.Write(true);
-            }
-        }
+        const string FileName = "HotA.dat";
 
         void DisplayValues()
         {
-            if (File.Exists(fileName))
+            if (!File.Exists(FileName)) return;
+            using (var reader = new BinaryReader(File.Open(FileName, FileMode.Open)))
             {
-                using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))
-                {
-                    var s = new string(reader.ReadChars(4));
-                    TextB.AppendText(s + "<---- START ----" + Environment.NewLine);
-                    TextB.AppendText(reader.BaseStream.Position + Environment.NewLine);
-                    TextB.AppendText(reader.ReadString() + "***" + reader.BaseStream.Position + Environment.NewLine);
-                    TextB.AppendText(reader.ReadString() + "***" + Environment.NewLine);
-                    TextB.AppendText(reader.ReadString() + "***" + Environment.NewLine);
-                    TextB.AppendText(reader.ReadString() + "***" + Environment.NewLine);
-                    TextB.AppendText(reader.ReadString() + "***" + Environment.NewLine);
-                    TextB.AppendText(reader.ReadString() + "***" + reader.BaseStream.Position);
-                }
+                var dupa = reader;
+                var s = new string(dupa.ReadChars(4));
+
+                if (s != "HDAT")
+                    return;
+                dupa.ReadChars(8);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                dupa.ReadChars(10);
+                TextB.AppendText(dupa.BaseStream.Position + "***" + Environment.NewLine);
+   
+                /*
+                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
+                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
+                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
+                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
+                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
+                TextB.AppendText(dupa.ReadString() + "***" + dupa.BaseStream.Position);*/
+                
             }
+        }
+
+        private string ReadString(ref BinaryReader stream, int length)
+        {
+            var a = new string(stream.ReadChars(length));
+            return a;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //WriteDefaultValues();
             DisplayValues();
         }
     }
