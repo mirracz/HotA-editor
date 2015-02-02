@@ -54,7 +54,7 @@ namespace HotA_editor
                 TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
                 TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
                 */
-                int IleBohaterow = 23;
+                int IleBohaterow = 22;
 
                 for (int i = 0; i < IleBohaterow; i++)
                 {
@@ -71,11 +71,26 @@ namespace HotA_editor
                     TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
                     TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
                     TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    dupa.ReadChars(137);
+                    TextB.AppendText(ReadBytes(ref dupa, 137) + "***" + Environment.NewLine);
                 }
 
+                int IleKlas = 2;
+
+                for (int i = 0; i < IleKlas; i++)
+                {
+                    TextB.AppendText(@"*** \/\/\/\/\/\/\/\/\/\/\/\/ " + "***" + Environment.NewLine);
+
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    dupa.ReadChars(8);
+                    TextB.AppendText("tutaj przeskakujemy" + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadBytes(ref dupa, 117) + "***" + Environment.NewLine);
+                }
+
+
                 //137
-                TextB.AppendText(dupa.BaseStream.Position + "***" + Environment.NewLine);
+                //TextB.AppendText(dupa.BaseStream.Position + "***" + Environment.NewLine);
    
                 /*
                 TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
@@ -92,6 +107,14 @@ namespace HotA_editor
         {
             var a = new string(stream.ReadChars(length));
             return a;
+        }
+
+        private string ReadBytes(ref BinaryReader stream, int length)
+        {
+            var dupa = stream.ReadBytes(length);
+            string dataString = String.Concat(dupa.Select(b => b.ToString("x2")));
+            var a = dataString;
+            return null;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
