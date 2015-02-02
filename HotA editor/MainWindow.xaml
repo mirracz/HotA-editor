@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="619" Width="837">
     <Grid>
-        <TextBox x:Name="TextB" TextWrapping="Wrap" Height="497" VerticalAlignment="Top"/>
+        <TextBox x:Name="TextB" TextWrapping="Wrap" Height="497" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible"/>
         <Button Content="Działaj!" HorizontalAlignment="Left" Height="31" Margin="575,528,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click"/>
 
     </Grid>

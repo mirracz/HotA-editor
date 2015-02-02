@@ -34,14 +34,47 @@ namespace HotA_editor
             using (var reader = new BinaryReader(File.Open(FileName, FileMode.Open)))
             {
                 var dupa = reader;
-                var s = new string(dupa.ReadChars(4));
 
+                var s = new string(dupa.ReadChars(4));
                 if (s != "HDAT")
                     return;
+
+
                 dupa.ReadChars(8);
+                /*
                 TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
                 TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                dupa.ReadChars(10);
+                dupa.ReadChars(8);
+                TextB.AppendText("tutaj przeskakujemy" + "***" + Environment.NewLine);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                */
+                int IleBohaterow = 23;
+
+                for (int i = 0; i < IleBohaterow; i++)
+                {
+                    TextB.AppendText("*** *** *** *** *** *** *** " + "***" + Environment.NewLine);
+                    
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    dupa.ReadChars(8);
+                    TextB.AppendText("tutaj przeskakujemy" + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    dupa.ReadChars(137);
+                }
+
+                //137
                 TextB.AppendText(dupa.BaseStream.Position + "***" + Environment.NewLine);
    
                 /*
