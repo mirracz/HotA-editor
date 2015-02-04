@@ -39,82 +39,141 @@ namespace HotA_editor
                 if (s != "HDAT")
                     return;
 
-
                 dupa.ReadChars(8);
-                /*
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                dupa.ReadChars(8);
-                TextB.AppendText("tutaj przeskakujemy" + "***" + Environment.NewLine);
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                */
-                int IleBohaterow = 22;
 
-                for (int i = 0; i < IleBohaterow; i++)
+                const int ileBohaterow = 22;
+
+                for (var i = 0; i < ileBohaterow; i++)
                 {
-                    TextB.AppendText("*** *** *** *** *** *** *** " + "***" + Environment.NewLine);
-                    
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    dupa.ReadChars(8);
-                    TextB.AppendText("tutaj przeskakujemy" + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadBytes(ref dupa, 137) + "***" + Environment.NewLine);
+                    TextB.AppendText("Nazwa pliku:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Katalog:           " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 8) + Environment.NewLine);
+                    TextB.AppendText("Ikona duża:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Ikona mała:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Spec. krótka:      " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Spec. długa:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Opis specjalności: " + Environment.NewLine + "***" + Environment.NewLine + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine + "***" + Environment.NewLine);
+                    TextB.AppendText("Imię:              " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Historia bohatera: " + Environment.NewLine + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 137) + Environment.NewLine);
+
+                    TextB.AppendText(Environment.NewLine + Environment.NewLine);
                 }
 
-                int IleKlas = 2;
+                const int ileKlas = 2;
 
-                for (int i = 0; i < IleKlas; i++)
+                for (var i = 0; i < ileKlas; i++)
                 {
-                    TextB.AppendText(@"*** \/\/\/\/\/\/\/\/\/\/\/\/ " + "***" + Environment.NewLine);
+                    TextB.AppendText("Nazwa pliku:       " + ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText("Katalog:           " + ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 8) + Environment.NewLine);
+                    TextB.AppendText("Nazwa klasy:       " + ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 117) + Environment.NewLine);
 
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    dupa.ReadChars(8);
-                    TextB.AppendText("tutaj przeskakujemy" + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadString(ref dupa, dupa.ReadInt32()) + "***" + Environment.NewLine);
-                    TextB.AppendText(ReadBytes(ref dupa, 117) + "***" + Environment.NewLine);
+                    TextB.AppendText(Environment.NewLine + Environment.NewLine);
                 }
 
+                const int ilePotworow = 18;
 
-                //137
-                //TextB.AppendText(dupa.BaseStream.Position + "***" + Environment.NewLine);
-   
-                /*
-                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
-                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
-                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
-                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
-                TextB.AppendText(dupa.ReadString() + "***" + Environment.NewLine);
-                TextB.AppendText(dupa.ReadString() + "***" + dupa.BaseStream.Position);*/
-                
+                for (var i = 0; i < ilePotworow; i++)
+                {
+                    TextB.AppendText("Nazwa pliku:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Katalog:           " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 8) + Environment.NewLine);
+                    TextB.AppendText("Ikona duża:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Ikona mała:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Spec. krótka:      " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Spec. długa:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 157) + Environment.NewLine);
+
+                    TextB.AppendText(Environment.NewLine + Environment.NewLine);
+                }
+
+                const int ileZamkow = 1;
+
+                for (var i = 0; i < ileZamkow; i++)
+                {
+                    TextB.AppendText("Nazwa pliku:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Katalog:           " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 8) + Environment.NewLine);
+                    TextB.AppendText("Ikona duża:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Ikona mała:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Spec. krótka:      " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Spec. długa:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Xxx1               " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Xxx2               " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Xxx3               " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Xxx4               " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 377) + Environment.NewLine);
+
+                    TextB.AppendText(Environment.NewLine + Environment.NewLine);
+                }
+
+                const int CenyWZamku = 1;
+
+                for (var i = 0; i < CenyWZamku; i++)
+                {
+                    TextB.AppendText("Nazwa pliku:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Katalog:           " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 8) + "***pozostałe opcje***" + Environment.NewLine);
+                    TextB.AppendText("Ikona duża:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 20) + "***pozostałe opcje***" + Environment.NewLine);
+                    TextB.AppendText("Nazwa:" + Environment.NewLine + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Opis dłuższy:" + Environment.NewLine + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + ReadBytes(ref dupa, 417) + Environment.NewLine);
+
+                    TextB.AppendText(Environment.NewLine + Environment.NewLine);
+                }
+
+                const int CenyBudynkow = 1;
+
+                for (var i = 0; i < CenyBudynkow; i++)
+                {
+                    TextB.AppendText("Nazwa pliku:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Katalog:           " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 8) + "***pozostałe opcje***" + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 24) + "***pozostałe opcje***" + Environment.NewLine);
+                    TextB.AppendText("Ikona duża:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Nazwa:" + Environment.NewLine + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + ReadBytes(ref dupa, 277) + Environment.NewLine);
+
+                    TextB.AppendText(Environment.NewLine + Environment.NewLine);
+                }
+
+                const int BitwaWZamku = 1;
+
+                for (var i = 0; i < BitwaWZamku; i++)
+                {
+                    TextB.AppendText("Nazwa pliku:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Katalog:           " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 8) + Environment.NewLine);
+                    TextB.AppendText("Ikona duża:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Ikona mała:        " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Spec. krótka:      " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Spec. długa:       " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Xxx1               " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Xxx2               " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Xxx3               " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("Xxx4               " + ReadString(ref dupa, dupa.ReadInt32()) + Environment.NewLine);
+                    TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + ReadBytes(ref dupa, 377) + Environment.NewLine);
+
+                    TextB.AppendText(Environment.NewLine + Environment.NewLine);
+                }
+
+                TextB.AppendText(dupa.BaseStream.Position.ToString());
             }
         }
 
         private string ReadString(ref BinaryReader stream, int length)
         {
-            var a = new string(stream.ReadChars(length));
-            return a;
+            return new string(stream.ReadChars(length));
         }
 
         private string ReadBytes(ref BinaryReader stream, int length)
         {
             var dupa = stream.ReadBytes(length);
-            string dataString = String.Concat(dupa.Select(b => b.ToString("x2")));
-            var a = dataString;
-            return null;
+            var dataString = String.Concat(dupa.Select(b => b.ToString("X2") + " "));
+            return dataString;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

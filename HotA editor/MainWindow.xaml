@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="619" Width="837">
     <Grid>
-        <TextBox x:Name="TextB" TextWrapping="Wrap" Height="497" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible"/>
-        <Button Content="Działaj!" HorizontalAlignment="Left" Height="31" Margin="575,528,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click"/>
+        <TextBox x:Name="TextB" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas" Margin="0,0,0,91"/>
+        <Button Content="Działaj!" Margin="0,0,96,29" Click="Button_Click" HorizontalAlignment="Right" Width="158" Height="31" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>
