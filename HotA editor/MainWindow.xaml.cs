@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Windows;
 
@@ -21,7 +22,7 @@ namespace HotA_editor
         void DisplayValues()
         {
             if (!File.Exists(FileName)) return;
-            using (var read = new BinaryReader(File.Open(FileName, FileMode.Open), Encoding.ASCII))
+            using (var read = new BinaryReader(File.Open(FileName, FileMode.Open), Encoding.GetEncoding("windows-1251")))
             {
                 var reader = read;
 
@@ -61,7 +62,7 @@ namespace HotA_editor
                     //TextB.AppendText("Xxx2               " + tmp8 + Environment.NewLine);
 
                     var tmp9 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Xxx3               " + tmp9 + Environment.NewLine);
+                    TextB.AppendText("Xxx3               " + tmp9 + Environment.NewLine);
 
                     var tmp10 = ReadString(ref reader, reader.ReadInt32());
                     //TextB.AppendText("Xxx4               " + tmp10 + Environment.NewLine);
