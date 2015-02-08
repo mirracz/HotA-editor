@@ -17,8 +17,9 @@ namespace HotA_editor
             InitializeComponent();
         }
 
-        const string FileName = "HotA.dat";
+        const string FileName = "hota-test.dat";
 
+        /*
         void DisplayValues()
         {
             if (!File.Exists(FileName)) return;
@@ -38,10 +39,10 @@ namespace HotA_editor
                     //TextB.AppendText("Nazwa pliku:       " + tmp + Environment.NewLine);
 
                     var tmp1 = ReadString(ref reader, reader.ReadInt32());
-                    TextB.AppendText("Katalog:           " + tmp1 + Environment.NewLine);
+                    //TextB.AppendText("Katalog:           " + tmp1 + Environment.NewLine);
 
-                    var tmp2 = ReadBytes(ref reader, 8);
-                    //TextB.AppendText("***pozostałe opcje***" + Environment.NewLine + tmp2 + Environment.NewLine);
+                    var tmp2 = ReadInts(ref reader, 2);
+                    TextB.AppendText(tmp2 + Environment.NewLine);
 
                     var tmp3 = ReadString(ref reader, reader.ReadInt32());
                     //TextB.AppendText("Ikona duża:        " + tmp3 + Environment.NewLine);
@@ -62,7 +63,7 @@ namespace HotA_editor
                     //TextB.AppendText("Xxx2               " + tmp8 + Environment.NewLine);
 
                     var tmp9 = ReadString(ref reader, reader.ReadInt32());
-                    TextB.AppendText("Xxx3               " + tmp9 + Environment.NewLine);
+                    //TextB.AppendText("Xxx3               " + tmp9 + Environment.NewLine);
 
                     var tmp10 = ReadString(ref reader, reader.ReadInt32());
                     //TextB.AppendText("Xxx4               " + tmp10 + Environment.NewLine);
@@ -96,19 +97,33 @@ namespace HotA_editor
             return String.Concat(stream.ReadBytes(length).Select(b => b.ToString("X2") + " "));
         }
 
-        private static string ReadInts(ref BinaryReader stream, int length)
+        private static int[] ReadInts(ref BinaryReader stream, int length)
         {
-            var ret = string.Empty;
+            var ret = new int[length];
             for (var i = 0; i < length; i++)
             {
-                ret += stream.ReadInt32() + " ";
+                ret[i] += stream.ReadInt32();
             }
             return ret;
         }
+        */
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DisplayValues();
+            try
+            {
+                var file2 = new Hdat();
+                file2.WriteFile("hota-test.dat");
+
+                //DisplayValues();
+                var file = new Hdat();
+                file.ReadFile(FileName);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
