@@ -3,8 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="619" Width="837">
     <Grid>
-        <TextBox x:Name="TextB" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Margin="0,0,0,91"/>
-        <Button Content="Działaj!" Margin="0,0,96,29" Click="Button_Click" HorizontalAlignment="Right" Width="158" Height="31" VerticalAlignment="Bottom"/>
-
+        <Button Content="Otwórz plik" Margin="10,10,0,0" Click="Open_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
+        <Button Content="Zapisz" Margin="115,10,0,0" Click="Save_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
+        <GroupBox x:Name="Grbox" Header="Edycja pliku" HorizontalAlignment="Left" Height="534" Margin="10,45,0,0" VerticalAlignment="Top" Width="809" IsEnabled="False">
+            <Grid>
+                <TextBox x:Name="TextB" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Margin="313,98,214,82"/>
+                <ListView HorizontalAlignment="Left" Height="492" Margin="10,10,0,0" VerticalAlignment="Top" Width="184">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </GroupBox>
+        <TextBox x:Name="TxtBoxFileName" HorizontalAlignment="Left" Height="30" Margin="220,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="400" IsReadOnly="True" VerticalContentAlignment="Center"/>
     </Grid>
 </Window>

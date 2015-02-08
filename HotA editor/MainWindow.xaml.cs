@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace HotA_editor
 {
@@ -12,112 +14,44 @@ namespace HotA_editor
     /// </summary>
     public partial class MainWindow
     {
+        string _fileName;
+        readonly Hdat _hdatfile = new Hdat();
+        private List<HdatEntry> _entries; 
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        const string FileName = "hota-test.dat";
-
-        /*
-        void DisplayValues()
-        {
-            if (!File.Exists(FileName)) return;
-            using (var read = new BinaryReader(File.Open(FileName, FileMode.Open), Encoding.GetEncoding("windows-1251")))
-            {
-                var reader = read;
-
-                var s = ReadString(ref reader, 4) + reader.ReadInt32();
-                if (s != "HDAT2")
-                    return;
-
-                var noOfFiles = reader.ReadInt32();
-
-                for (var i = 0; i < noOfFiles; i++)
-                {
-                    var tmp = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Nazwa pliku:       " + tmp + Environment.NewLine);
-
-                    var tmp1 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Katalog:           " + tmp1 + Environment.NewLine);
-
-                    var tmp2 = ReadInts(ref reader, 2);
-                    TextB.AppendText(tmp2 + Environment.NewLine);
-
-                    var tmp3 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Ikona duża:        " + tmp3 + Environment.NewLine);
-
-                    var tmp4 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Ikona mała:        " + tmp4 + Environment.NewLine);
-
-                    var tmp5 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Spec. krótka:      " + tmp5 + Environment.NewLine);
-
-                    var tmp6 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Spec. długa:       " + tmp6 + Environment.NewLine);
-
-                    var tmp7 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Xxx1               " + tmp7 + Environment.NewLine);
-
-                    var tmp8 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Xxx2               " + tmp8 + Environment.NewLine);
-
-                    var tmp9 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Xxx3               " + tmp9 + Environment.NewLine);
-
-                    var tmp10 = ReadString(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Xxx4               " + tmp10 + Environment.NewLine);
-
-                    var tmp11 = ReadBoolean(ref reader);
-                    //TextB.AppendText("Dane Dodatkowe?    " + tmp11 + Environment.NewLine);
-                    if (tmp11)
-                    {
-                        var tmp12 = ReadBytes(ref reader, reader.ReadInt32());
-                        //TextB.AppendText("Xxx6               " + tmp12 + Environment.NewLine);
-                    }
-
-                    var tmp13 = ReadInts(ref reader, reader.ReadInt32());
-                    //TextB.AppendText("Ile licz?          " + tmp13 + Environment.NewLine);
-                }
-            }
-        }
-
-        private static string ReadString(ref BinaryReader stream, int length)
-        {
-            return new string(stream.ReadChars(length));
-        }
-
-        private static Boolean ReadBoolean(ref BinaryReader stream)
-        {
-            return stream.ReadBoolean();
-        }
-
-        private static string ReadBytes(ref BinaryReader stream, int length)
-        {
-            return String.Concat(stream.ReadBytes(length).Select(b => b.ToString("X2") + " "));
-        }
-
-        private static int[] ReadInts(ref BinaryReader stream, int length)
-        {
-            var ret = new int[length];
-            for (var i = 0; i < length; i++)
-            {
-                ret[i] += stream.ReadInt32();
-            }
-            return ret;
-        }
-        */
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Open_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var file2 = new Hdat();
-                file2.WriteFile("hota-test.dat");
+                var fileDialog = new OpenFileDialog {Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*", FileName = "HotA.dat" };
+                if (fileDialog.ShowDialog() != true) return;
 
-                //DisplayValues();
-                var file = new Hdat();
-                file.ReadFile(FileName);
+                Grbox.IsEnabled = true;
+                _fileName = fileDialog.FileName;
+                TxtBoxFileName.Text = _fileName;
+                _entries = _hdatfile.ReadFile(_fileName);
+
+                TextB.Text = _entries[1].Name;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fileDialog = new SaveFileDialog { Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*", FileName = "HotA.dat" };
+                if (fileDialog.ShowDialog() != true) return;
+
+                _hdatfile.WriteFile(fileDialog.FileName, _entries);
             }
             catch (Exception ex)
             {

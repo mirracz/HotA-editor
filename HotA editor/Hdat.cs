@@ -9,8 +9,10 @@ namespace HotA_editor
 {
     class Hdat
     {
-        internal string ReadFile(string path)
+        internal List<HdatEntry> ReadFile(string path)
         {
+            var entries = new List<HdatEntry>();
+
             if (!File.Exists(path))
             {
                 throw new FileNotFoundException();
@@ -22,45 +24,38 @@ namespace HotA_editor
 
                 var s = ReadString(ref reader, 4) + reader.ReadInt32();
                 if (s != "HDAT2")
-                    return string.Empty;
+                    return null;
 
                 var noOfFiles = reader.ReadInt32();
 
                 for (var i = 0; i < noOfFiles; i++)
                 {
-                    var name = ReadString(ref reader, reader.ReadInt32());
-
-                    var folder = ReadString(ref reader, reader.ReadInt32());
-
+                    // ReSharper disable once UseObjectOrCollectionInitializer
+                    var tmp = new HdatEntry(); 
+                    tmp.Name = ReadString(ref reader, reader.ReadInt32());
+                    tmp.FolderName = ReadString(ref reader, reader.ReadInt32());
                     ReadInts(ref reader, 2);
-
-                    var tmp3 = ReadString(ref reader, reader.ReadInt32());
-
-                    var tmp4 = ReadString(ref reader, reader.ReadInt32());
-
-                    var tmp5 = ReadString(ref reader, reader.ReadInt32());
-
-                    var tmp6 = ReadString(ref reader, reader.ReadInt32());
-
-                    var tmp7 = ReadString(ref reader, reader.ReadInt32());
-
-                    var tmp8 = ReadString(ref reader, reader.ReadInt32());
-
-                    var tmp9 = ReadString(ref reader, reader.ReadInt32());
-
-                    var tmp10 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data1 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data2 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data3 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data4 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data5 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data6 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data7 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data8 = ReadString(ref reader, reader.ReadInt32());
 
                     // chceck if extra data exist
                     if (ExtraDataExist(ref reader))
                     {
-                        var tmp12 = ReadExtraData(ref reader, reader.ReadInt32());
+                        tmp.Data9 = ReadExtraData(ref reader, reader.ReadInt32());
                     }
 
-                    var tmp13 = ReadInts(ref reader, reader.ReadInt32());
+                    tmp.Data10 = ReadInts(ref reader, reader.ReadInt32());
+
+                    entries.Add(tmp);
                 }
             }
-
-            return string.Empty;
+            return entries;
         }
 
         private static string ReadString(ref BinaryReader stream, int length)
@@ -73,9 +68,9 @@ namespace HotA_editor
             return stream.ReadBoolean();
         }
 
-        private static string ReadExtraData(ref BinaryReader stream, int length)
+        private static byte[] ReadExtraData(ref BinaryReader stream, int length)
         {
-            return String.Concat(stream.ReadBytes(length).Select(b => b.ToString("X2")));
+            return stream.ReadBytes(length);
         }
 
         private static int[] ReadInts(ref BinaryReader stream, int length)
@@ -88,7 +83,7 @@ namespace HotA_editor
             return ret;
         }
 
-        internal void WriteFile(string path)
+        internal void WriteFile(string path, List<HdatEntry> entries)
         {
             using (var write = new BinaryWriter(File.Open(path, FileMode.Create), Encoding.GetEncoding("windows-1251")))
             {
@@ -97,65 +92,49 @@ namespace HotA_editor
                 writer.Write(new []{'H', 'D', 'A', 'T'});
                 writer.Write(2);
 
-                //tmp
-                var files = 3;
+                writer.Write(entries.Count);
 
-                writer.Write(files);
+                var tmp = 0;
 
-                for (var i = 0; i < files; i++)
+                foreach (HdatEntry t in entries)
                 {
-                    //var name = 
-                    WriteString(ref writer, "test0");
-
-                    //var folder = 
-                    WriteString(ref writer, "0test");
-
+                    tmp++;
+                    WriteString(ref writer, t.Name);
+                    WriteString(ref writer, t.FolderName);
                     WriteInts(ref writer, new []{9,0}, false);
+                    WriteString(ref writer, t.Data1);
+                    WriteString(ref writer, t.Data2);
+                    WriteString(ref writer, t.Data3);
+                    WriteString(ref writer, t.Data4);
+                    WriteString(ref writer, t.Data5);
+                    WriteString(ref writer, t.Data6);
+                    WriteString(ref writer, t.Data7);
+                    WriteString(ref writer, t.Data8);
 
-                    //var tmp3 = 
-                    WriteString(ref writer, "test1");
-
-                    //var tmp4 = 
-                    WriteString(ref writer, "test2");
-
-                    //var tmp5 = 
-                    WriteString(ref writer, "test4");
-
-                    //var tmp6 = 
-                    WriteString(ref writer, "test5");
-
-                    //var tmp7 = 
-                    WriteString(ref writer, "test6");
-
-                    //var tmp8 = 
-                    WriteString(ref writer, "test7" + Environment.NewLine + "test8");
-
-                    //var tmp9 = 
-                    WriteString(ref writer, "zażółć gęślą jaźń");
-
-                    //var tmp10 = 
-                    WriteString(ref writer, "test60");
-
-                    var tmp12 = new[] {'a', 'e', 'i', 'o'};
                     // chceck if extra data exist
-                    if (tmp12.Length > 0)
+                    if (t.Data9 != null)
                     {
                         writer.Write(true);
-                        WriteExtraData(ref writer, tmp12);
+                        WriteExtraData(ref writer, t.Data9);
                     }
                     else
                     {
                         writer.Write(false);
                     }
 
-                    int[] tmp13 = {28, 2, 3, 6, 189}; 
-                    WriteInts(ref writer, tmp13, true);
+                    WriteInts(ref writer, t.Data10, true);
                 }
             }
         }
 
         private static void WriteString(ref BinaryWriter stream, string text)
         {
+            if (text == null)
+            {
+                stream.Write(0);
+                return;
+            }
+
             stream.Write(text.Length);
 
             foreach (var t in text)
@@ -164,16 +143,30 @@ namespace HotA_editor
             }
         }
 
-        private static void WriteExtraData(ref BinaryWriter stream, char[] bytes)
+        private static void WriteExtraData(ref BinaryWriter stream, byte[] bytes)
         {
+            if (bytes == null)
+            {
+                stream.Write(0);
+                return;
+            }
+
             stream.Write(bytes.Length);
             stream.Write(bytes);
         }
 
         private static void WriteInts(ref BinaryWriter stream, int[] bytes, bool writeLength)
         {
+            if (bytes == null)
+            {
+                stream.Write(0);
+                return;
+            }
+
             if (writeLength)
+            {
                 stream.Write(bytes.Length);
+            }
 
             foreach (var t in bytes)
             {
