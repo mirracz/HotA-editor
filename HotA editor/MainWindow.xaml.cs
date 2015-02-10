@@ -1,26 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Windows;
+﻿using System.Text;
 using Microsoft.Win32;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
 
 namespace HotA_editor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : INotifyPropertyChanged
     {
-        string _fileName;
         readonly Hdat _hdatfile = new Hdat();
-        private List<HdatEntry> _entries; 
+        private ObservableCollection<HdatEntry> _list = new ObservableCollection<HdatEntry>();
+        private HdatEntry _selectedEntry;
 
         public MainWindow()
         {
             InitializeComponent();
+            Title = "HotA editor v0.1";
+        }
+
+        public ObservableCollection<HdatEntry> List
+        {
+            get { return _list; }
+            set { _list = value; NotifyPropertyChanged("List"); }
+        }
+
+        public HdatEntry SelectedEntry
+        {
+            get { return _selectedEntry; }
+            set { _selectedEntry = value; NotifyPropertyChanged("SelectedEntry"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -31,11 +51,19 @@ namespace HotA_editor
                 if (fileDialog.ShowDialog() != true) return;
 
                 Grbox.IsEnabled = true;
-                _fileName = fileDialog.FileName;
-                TxtBoxFileName.Text = _fileName;
-                _entries = _hdatfile.ReadFile(_fileName);
+                var fileName = fileDialog.FileName;
+                Title = "HotA editor v0.1 -- " + fileName;
 
-                TextB.Text = _entries[1].Name;
+                if (Open1250.IsChecked == true)
+                {
+                    List = _hdatfile.ReadFile(fileName, Encoding.GetEncoding("windows-1250"));
+                }
+
+                if (Open1251.IsChecked == true)
+                {
+                    List = _hdatfile.ReadFile(fileName, Encoding.GetEncoding("windows-1251"));
+                }
+                
             }
             catch (Exception ex)
             {
@@ -51,7 +79,15 @@ namespace HotA_editor
                 var fileDialog = new SaveFileDialog { Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*", FileName = "HotA.dat" };
                 if (fileDialog.ShowDialog() != true) return;
 
-                _hdatfile.WriteFile(fileDialog.FileName, _entries);
+                if (Save1251.IsChecked == true)
+                {
+                    _hdatfile.WriteFile(fileDialog.FileName, List, Encoding.GetEncoding("windows-1251"));
+                }
+
+                if (Save1250.IsChecked == true)
+                {
+                    _hdatfile.WriteFile(fileDialog.FileName, List, Encoding.GetEncoding("windows-1250"));
+                }
             }
             catch (Exception ex)
             {

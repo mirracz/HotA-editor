@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace HotA_editor
 {
     class Hdat
     {
-        internal List<HdatEntry> ReadFile(string path)
+        internal ObservableCollection<HdatEntry> ReadFile(string path, Encoding enc)
         {
-            var entries = new List<HdatEntry>();
+            var entries = new ObservableCollection<HdatEntry>();
 
             if (!File.Exists(path))
             {
                 throw new FileNotFoundException();
             }
 
-            using (var read = new BinaryReader(File.Open(path, FileMode.Open), Encoding.GetEncoding("windows-1251")))
+            using (var read = new BinaryReader(File.Open(path, FileMode.Open), enc))
             {
                 var reader = read;
 
@@ -83,9 +81,9 @@ namespace HotA_editor
             return ret;
         }
 
-        internal void WriteFile(string path, List<HdatEntry> entries)
+        internal void WriteFile(string path, ObservableCollection<HdatEntry> entries, Encoding enc)
         {
-            using (var write = new BinaryWriter(File.Open(path, FileMode.Create), Encoding.GetEncoding("windows-1251")))
+            using (var write = new BinaryWriter(File.Open(path, FileMode.Create), enc))
             {
                 var writer = write;
 
