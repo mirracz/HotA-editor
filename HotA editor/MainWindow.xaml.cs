@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Windows.Data;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
@@ -94,6 +95,20 @@ namespace HotA_editor
 
                 MessageBox.Show(ex.Message);
             }
+        }
+    }
+
+    public class TextToBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return !string.IsNullOrEmpty((string)value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (!(value is bool)) return "no";
+            return (bool)value? "yes" : "no";
         }
     }
 }
