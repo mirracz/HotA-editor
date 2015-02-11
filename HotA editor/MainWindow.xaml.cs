@@ -107,8 +107,7 @@ namespace HotA_editor
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (!(value is bool)) return "no";
-            return (bool)value? "yes" : "no";
+            return string.Empty;
         }
     }
 }
