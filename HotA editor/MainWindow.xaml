@@ -10,12 +10,12 @@
     </Window.Resources>
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Kodowanie znaków w otwieranym pliku:" VerticalAlignment="Top"/>
-        <RadioButton Content="Windows-1251 (oryginalne)" GroupName="Open" x:Name="Open1251" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" IsChecked="True"/>
-        <RadioButton Content="Windows-1250" GroupName="Open" x:Name="Open1250" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="Windows-1251 (oryginalne)" GroupName="Open" x:Name="Open1251" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="Windows-1250" GroupName="Open" x:Name="Open1250" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" IsChecked="True"/>
         <Button Content="Otwórz plik" Margin="230,20,0,0" Click="Open_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
-        <TextBlock Margin="412,10,0,0" TextWrapping="Wrap" Text="Kodowanie znaków w zapisywanym pliku:" VerticalAlignment="Top" HorizontalAlignment="Left" Width="219"/>
-        <RadioButton Content="Windows-1251 (oryginalne, brak pl znaków)" GroupName="Save" x:Name="Save1251" Margin="412,24,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="248"/>
-        <RadioButton Content="Windows-1250 (z polskimi znakami)" GroupName="Save" x:Name="Save1250" Margin="412,40,0,0" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Left" Width="206"/>
+        <TextBlock Margin="412,10,0,0" TextWrapping="Wrap" Text="Kodowanie znaków w zapisywanym pliku:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <RadioButton Content="Windows-1251 (oryginalne, brak pl znaków)" GroupName="Save" x:Name="Save1251" Margin="412,24,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <RadioButton Content="Windows-1250 (z polskimi znakami)" GroupName="Save" x:Name="Save1250" Margin="412,40,0,0" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Left"/>
         <Button Content="Zapisz" Margin="680,20,0,0" Click="Save_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
         <GroupBox x:Name="Grbox" Header="Edycja pliku" Margin="10,64,10,10" IsEnabled="True">
             <Grid>

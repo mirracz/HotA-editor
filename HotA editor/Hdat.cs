@@ -92,11 +92,8 @@ namespace HotA_editor
 
                 writer.Write(entries.Count);
 
-                var tmp = 0;
-
-                foreach (HdatEntry t in entries)
+                foreach (var t in entries)
                 {
-                    tmp++;
                     WriteString(ref writer, t.Name);
                     WriteString(ref writer, t.FolderName);
                     WriteInts(ref writer, new []{9,0}, false);
