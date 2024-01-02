@@ -20,7 +20,8 @@ namespace HotA_editor
         public MainWindow()
         {
             InitializeComponent();
-            Title = "HotA editor v0.1";
+            Title = "HotA editor v0.2";
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
         public ObservableCollection<HdatEntry> List
@@ -53,7 +54,7 @@ namespace HotA_editor
 
                 Grbox.IsEnabled = true;
                 var fileName = fileDialog.FileName;
-                Title = "HotA editor v0.1 -- " + fileName;
+                Title = "HotA editor v0.2 -- " + fileName;
 
                 if (Open1250.IsChecked == true)
                 {

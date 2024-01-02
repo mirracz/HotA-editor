@@ -6,6 +6,10 @@ namespace HotA_editor
     {
         private string _name;
         private string _folderName;
+
+        public int Int1 { get; set; }
+        public int Int2 { get; set; }
+
         private string _data1;
         private string _data2;
         private string _data3;
@@ -14,6 +18,7 @@ namespace HotA_editor
         private string _data6;
         private string _data7;
         private string _data8;
+        private string _newData;
         private byte[] _data9;
         private int[] _data10;
 
@@ -75,6 +80,12 @@ namespace HotA_editor
         {
             get { return _data8; }
             set { _data8 = value; NotifyPropertyChanged("Data8"); }
+        }
+
+        public string NewData
+        {
+            get { return _newData; }
+            set { _newData = value; NotifyPropertyChanged("NewData"); }
         }
 
         public byte[] Data9

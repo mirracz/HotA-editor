@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Text;
 
 namespace HotA_editor
@@ -32,8 +33,19 @@ namespace HotA_editor
                     var tmp = new HdatEntry(); 
                     tmp.Name = ReadString(ref reader, reader.ReadInt32());
                     tmp.FolderName = ReadString(ref reader, reader.ReadInt32());
-                    ReadInts(ref reader, 2);
-                    tmp.Data1 = ReadString(ref reader, reader.ReadInt32());
+
+                    tmp.Int1 = reader.ReadInt32();
+                    tmp.Int2 = reader.ReadInt32();
+
+                    if(tmp.Int2 > 0)
+                    {
+                        tmp.Data1 = ReadString(ref reader, tmp.Int2);
+                    }
+                    else
+                    {
+                        tmp.Data1 = ReadString(ref reader, reader.ReadInt32());
+                    }
+
                     tmp.Data2 = ReadString(ref reader, reader.ReadInt32());
                     tmp.Data3 = ReadString(ref reader, reader.ReadInt32());
                     tmp.Data4 = ReadString(ref reader, reader.ReadInt32());
@@ -42,8 +54,15 @@ namespace HotA_editor
                     tmp.Data7 = ReadString(ref reader, reader.ReadInt32());
                     tmp.Data8 = ReadString(ref reader, reader.ReadInt32());
 
+                    if (tmp.Int2 > 0)
+                    {
+                        tmp.NewData = ReadString(ref reader, reader.ReadInt32());
+                    }
+
+                    var exists = reader.ReadBoolean();
+
                     // chceck if extra data exist
-                    if (ExtraDataExist(ref reader))
+                    if (exists)
                     {
                         tmp.Data9 = ReadExtraData(ref reader, reader.ReadInt32());
                     }
@@ -96,7 +115,14 @@ namespace HotA_editor
                 {
                     WriteString(ref writer, t.Name);
                     WriteString(ref writer, t.FolderName);
-                    WriteInts(ref writer, new []{9,0}, false);
+
+                    writer.Write(t.Int1);
+
+                    if (t.Int2 == 0)
+                    {
+                        writer.Write(t.Int2);
+                    }
+
                     WriteString(ref writer, t.Data1);
                     WriteString(ref writer, t.Data2);
                     WriteString(ref writer, t.Data3);
@@ -105,6 +131,12 @@ namespace HotA_editor
                     WriteString(ref writer, t.Data6);
                     WriteString(ref writer, t.Data7);
                     WriteString(ref writer, t.Data8);
+
+
+                    if (t.Int2 > 0)
+                    {
+                        WriteString(ref writer, t.NewData);
+                    }
 
                     // chceck if extra data exist
                     if (t.Data9 != null)

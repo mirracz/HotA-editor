@@ -28,6 +28,7 @@
                 <RadioButton Content="Data6" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box6}" Name="Radio6" HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top"/>
                 <RadioButton Content="Data7" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box7}" Name="Radio7" HorizontalAlignment="Left" Margin="437,10,0,0" VerticalAlignment="Top"/>
                 <RadioButton Content="Data8" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box8}" Name="Radio8" HorizontalAlignment="Left" Margin="489,10,0,0" VerticalAlignment="Top"/>
+                <RadioButton Content="NewData" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=BoxNewData}" Name="NewData" HorizontalAlignment="Left" Margin="544,10,0,0" VerticalAlignment="Top"/>
                 <Grid Margin="125,31,10,10">
                     <TextBox AcceptsReturn="True" Name="Box1" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio1}" Text="{Binding SelectedEntry.Data1, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
                     <TextBox AcceptsReturn="True" Name="Box2" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio2}" Text="{Binding SelectedEntry.Data2, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
@@ -37,6 +38,7 @@
                     <TextBox AcceptsReturn="True" Name="Box6" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio6}" Text="{Binding SelectedEntry.Data6, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
                     <TextBox AcceptsReturn="True" Name="Box7" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio7}" Text="{Binding SelectedEntry.Data7, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
                     <TextBox AcceptsReturn="True" Name="Box8" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio8}" Text="{Binding SelectedEntry.Data8, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                    <TextBox AcceptsReturn="True" Name="BoxNewData" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=NewData}" Text="{Binding SelectedEntry.NewData, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
                 </Grid>
 
             </Grid>
