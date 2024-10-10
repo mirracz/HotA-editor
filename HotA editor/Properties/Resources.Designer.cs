@@ -140,5 +140,41 @@ namespace HotA_editor.Properties {
                 return ResourceManager.GetString("EncodingWriteW1251", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string MenuItemLanguage {
+            get {
+                return ResourceManager.GetString("MenuItemLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Czech.
+        /// </summary>
+        public static string MenuItemLanguageCz {
+            get {
+                return ResourceManager.GetString("MenuItemLanguageCz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string MenuItemLanguageEn {
+            get {
+                return ResourceManager.GetString("MenuItemLanguageEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Polish.
+        /// </summary>
+        public static string MenuItemLanguagePl {
+            get {
+                return ResourceManager.GetString("MenuItemLanguagePl", resourceCulture);
+            }
+        }
     }
 }

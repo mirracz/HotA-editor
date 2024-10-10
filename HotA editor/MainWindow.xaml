@@ -12,39 +12,48 @@
         <BooleanToVisibilityConverter x:Key="B2V" />
         <hotAEditor:TextToBooleanConverter x:Key="T2B" />
     </Window.Resources>
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="{lex:Loc EncodingReadTitle}" VerticalAlignment="Top"/>
-        <RadioButton Content="{lex:Loc EncodingReadW1251}" GroupName="Open" x:Name="Open1251" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="{lex:Loc EncodingReadW1250}" GroupName="Open" x:Name="Open1250" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" IsChecked="True"/>
-        <Button Content="{lex:Loc ButtonFileOpen}" Margin="230,20,0,0" Click="Open_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
-        <TextBlock Margin="412,10,0,0" TextWrapping="Wrap" Text="{lex:Loc EncodingWriteTitle}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <RadioButton Content="{lex:Loc EncodingWriteW1251}" GroupName="Save" x:Name="Save1251" Margin="412,24,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <RadioButton Content="{lex:Loc EncodingWriteW1250}" GroupName="Save" x:Name="Save1250" Margin="412,40,0,0" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Left"/>
-        <Button Content="{lex:Loc ButtonFileSave}" Margin="680,20,0,0" Click="Save_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
-        <GroupBox x:Name="Grbox" Header="{lex:Loc EditTitle}" Margin="10,64,10,10" IsEnabled="True">
-            <Grid>
-                <ListBox ItemsSource="{Binding List, ElementName=Ui}" SelectedItem="{Binding SelectedEntry, ElementName=Ui}" DisplayMemberPath="DisplayMember" SelectedIndex="0" HorizontalAlignment="Left" Width="120" />
-                <RadioButton Content="Data1" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box1}" Name="Radio1" HorizontalAlignment="Left" Margin="125,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
-                <RadioButton Content="Data2" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box2}" Name="Radio2" HorizontalAlignment="Left" Margin="177,10,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="Data3" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box3}" Name="Radio3" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="Data4" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box4}" Name="Radio4" HorizontalAlignment="Left" Margin="281,10,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="Data5" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box5}" Name="Radio5" HorizontalAlignment="Left" Margin="333,10,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="Data6" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box6}" Name="Radio6" HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="Data7" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box7}" Name="Radio7" HorizontalAlignment="Left" Margin="437,10,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="Data8" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box8}" Name="Radio8" HorizontalAlignment="Left" Margin="489,10,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="NewData" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=BoxNewData}" Name="NewData" HorizontalAlignment="Left" Margin="544,10,0,0" VerticalAlignment="Top"/>
-                <Grid Margin="125,31,10,10">
-                    <TextBox AcceptsReturn="True" Name="Box1" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio1}" Text="{Binding SelectedEntry.Data1, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
-                    <TextBox AcceptsReturn="True" Name="Box2" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio2}" Text="{Binding SelectedEntry.Data2, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
-                    <TextBox AcceptsReturn="True" Name="Box3" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio3}" Text="{Binding SelectedEntry.Data3, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
-                    <TextBox AcceptsReturn="True" Name="Box4" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio4}" Text="{Binding SelectedEntry.Data4, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
-                    <TextBox AcceptsReturn="True" Name="Box5" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio5}" Text="{Binding SelectedEntry.Data5, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
-                    <TextBox AcceptsReturn="True" Name="Box6" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio6}" Text="{Binding SelectedEntry.Data6, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
-                    <TextBox AcceptsReturn="True" Name="Box7" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio7}" Text="{Binding SelectedEntry.Data7, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
-                    <TextBox AcceptsReturn="True" Name="Box8" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio8}" Text="{Binding SelectedEntry.Data8, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
-                    <TextBox AcceptsReturn="True" Name="BoxNewData" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=NewData}" Text="{Binding SelectedEntry.NewData, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{lex:Loc MenuItemLanguage}">
+                <MenuItem Header="{lex:Loc MenuItemLanguageEn}" Click="MenuItemLanguageEn_Click" />
+                <MenuItem Header="{lex:Loc MenuItemLanguageCz}" Click="MenuItemLanguageCz_Click" />
+                <MenuItem Header="{lex:Loc MenuItemLanguagePl}" Click="MenuItemLanguagePl_Click" />
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Top">
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="{lex:Loc EncodingReadTitle}" VerticalAlignment="Top"/>
+            <RadioButton Content="{lex:Loc EncodingReadW1251}" GroupName="Open" x:Name="Open1251" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top"/>
+            <RadioButton Content="{lex:Loc EncodingReadW1250}" GroupName="Open" x:Name="Open1250" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" IsChecked="True"/>
+            <Button Content="{lex:Loc ButtonFileOpen}" Margin="230,20,0,0" Click="Open_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
+            <TextBlock Margin="412,10,0,0" TextWrapping="Wrap" Text="{lex:Loc EncodingWriteTitle}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <RadioButton Content="{lex:Loc EncodingWriteW1251}" GroupName="Save" x:Name="Save1251" Margin="412,24,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <RadioButton Content="{lex:Loc EncodingWriteW1250}" GroupName="Save" x:Name="Save1250" Margin="412,40,0,0" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Left"/>
+            <Button Content="{lex:Loc ButtonFileSave}" Margin="680,20,0,0" Click="Save_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
+            <GroupBox x:Name="Grbox" Header="{lex:Loc EditTitle}" Margin="10,64,10,10" IsEnabled="True">
+                <Grid>
+                    <ListBox ItemsSource="{Binding List, ElementName=Ui}" SelectedItem="{Binding SelectedEntry, ElementName=Ui}" DisplayMemberPath="DisplayMember" SelectedIndex="0" HorizontalAlignment="Left" Width="120" />
+                    <RadioButton Content="Data1" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box1}" Name="Radio1" HorizontalAlignment="Left" Margin="125,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <RadioButton Content="Data2" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box2}" Name="Radio2" HorizontalAlignment="Left" Margin="177,10,0,0" VerticalAlignment="Top"/>
+                    <RadioButton Content="Data3" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box3}" Name="Radio3" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top"/>
+                    <RadioButton Content="Data4" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box4}" Name="Radio4" HorizontalAlignment="Left" Margin="281,10,0,0" VerticalAlignment="Top"/>
+                    <RadioButton Content="Data5" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box5}" Name="Radio5" HorizontalAlignment="Left" Margin="333,10,0,0" VerticalAlignment="Top"/>
+                    <RadioButton Content="Data6" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box6}" Name="Radio6" HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top"/>
+                    <RadioButton Content="Data7" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box7}" Name="Radio7" HorizontalAlignment="Left" Margin="437,10,0,0" VerticalAlignment="Top"/>
+                    <RadioButton Content="Data8" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=Box8}" Name="Radio8" HorizontalAlignment="Left" Margin="489,10,0,0" VerticalAlignment="Top"/>
+                    <RadioButton Content="NewData" IsEnabled="{Binding Text, Converter={StaticResource T2B}, ElementName=BoxNewData}" Name="NewData" HorizontalAlignment="Left" Margin="544,10,0,0" VerticalAlignment="Top"/>
+                    <Grid Margin="125,31,10,10">
+                        <TextBox AcceptsReturn="True" Name="Box1" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio1}" Text="{Binding SelectedEntry.Data1, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                        <TextBox AcceptsReturn="True" Name="Box2" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio2}" Text="{Binding SelectedEntry.Data2, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                        <TextBox AcceptsReturn="True" Name="Box3" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio3}" Text="{Binding SelectedEntry.Data3, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                        <TextBox AcceptsReturn="True" Name="Box4" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio4}" Text="{Binding SelectedEntry.Data4, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                        <TextBox AcceptsReturn="True" Name="Box5" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio5}" Text="{Binding SelectedEntry.Data5, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                        <TextBox AcceptsReturn="True" Name="Box6" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio6}" Text="{Binding SelectedEntry.Data6, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                        <TextBox AcceptsReturn="True" Name="Box7" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio7}" Text="{Binding SelectedEntry.Data7, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                        <TextBox AcceptsReturn="True" Name="Box8" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=Radio8}" Text="{Binding SelectedEntry.Data8, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                        <TextBox AcceptsReturn="True" Name="BoxNewData" Visibility="{Binding IsChecked, Converter={StaticResource B2V}, ElementName=NewData}" Text="{Binding SelectedEntry.NewData, ElementName=Ui, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </GroupBox>
-    </Grid>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
 </Window>

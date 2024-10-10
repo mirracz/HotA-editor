@@ -140,9 +140,21 @@
     <value>Windows-1251 (původní, žádné znaky cz/pl)</value>
   </data>
   <data name="ButtonFileSave" xml:space="preserve">
-    <value>Ulož</value>
+    <value>Uložit</value>
   </data>
   <data name="EditTitle" xml:space="preserve">
     <value>Úprava souboru</value>
+  </data>
+  <data name="MenuItemLanguage" xml:space="preserve">
+    <value>Jazyk</value>
+  </data>
+  <data name="MenuItemLanguageEn" xml:space="preserve">
+    <value>Angličtina</value>
+  </data>
+  <data name="MenuItemLanguageCz" xml:space="preserve">
+    <value>Čeština</value>
+  </data>
+  <data name="MenuItemLanguagePl" xml:space="preserve">
+    <value>Polština</value>
   </data>
 </root>

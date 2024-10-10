@@ -144,4 +144,16 @@
   <data name="EditTitle" xml:space="preserve">
     <value>Edycja pliku</value>
   </data>
+  <data name="MenuItemLanguage" xml:space="preserve">
+    <value>Język</value>
+  </data>
+  <data name="MenuItemLanguageEn" xml:space="preserve">
+    <value>Angielski</value>
+  </data>
+  <data name="MenuItemLanguageCz" xml:space="preserve">
+    <value>Czeski</value>
+  </data>
+  <data name="MenuItemLanguagePl" xml:space="preserve">
+    <value>Polski</value>
+  </data>
 </root>

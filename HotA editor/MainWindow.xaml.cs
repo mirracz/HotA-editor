@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -26,7 +27,6 @@ public partial class MainWindow : INotifyPropertyChanged
         InitializeComponent();
         Title = "HotA editor v0.2";
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-        //WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("cs");
     }
 
     public ObservableCollection<HdatEntry> List
@@ -110,6 +110,21 @@ public partial class MainWindow : INotifyPropertyChanged
         {
             MessageBox.Show(ex.Message);
         }
+    }
+
+    private void MenuItemLanguageEn_Click(object sender, RoutedEventArgs e)
+    {
+        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("en");
+    }
+
+    private void MenuItemLanguageCz_Click(object sender, RoutedEventArgs e)
+    {
+        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("cs");
+    }
+
+    private void MenuItemLanguagePl_Click(object sender, RoutedEventArgs e)
+    {
+        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("pl");
     }
 }
 
