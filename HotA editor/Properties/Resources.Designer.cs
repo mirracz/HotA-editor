@@ -22,7 +22,7 @@ namespace HotA_editor.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace HotA_editor.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HotA_editor.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,93 @@ namespace HotA_editor.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open file.
+        /// </summary>
+        public static string ButtonFileOpen {
+            get {
+                return ResourceManager.GetString("ButtonFileOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ButtonFileSave {
+            get {
+                return ResourceManager.GetString("ButtonFileSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File edit.
+        /// </summary>
+        public static string EditTitle {
+            get {
+                return ResourceManager.GetString("EditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character encoding in the opened file:.
+        /// </summary>
+        public static string EncodingReadTitle {
+            get {
+                return ResourceManager.GetString("EncodingReadTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows-1250.
+        /// </summary>
+        public static string EncodingReadW1250 {
+            get {
+                return ResourceManager.GetString("EncodingReadW1250", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows-1251 (original).
+        /// </summary>
+        public static string EncodingReadW1251 {
+            get {
+                return ResourceManager.GetString("EncodingReadW1251", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character encoding in the saved file:.
+        /// </summary>
+        public static string EncodingWriteTitle {
+            get {
+                return ResourceManager.GetString("EncodingWriteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows-1250 (with cz/pl characters).
+        /// </summary>
+        public static string EncodingWriteW1250 {
+            get {
+                return ResourceManager.GetString("EncodingWriteW1250", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows-1251 (original, no cz/pl characters).
+        /// </summary>
+        public static string EncodingWriteW1251 {
+            get {
+                return ResourceManager.GetString("EncodingWriteW1251", resourceCulture);
             }
         }
     }

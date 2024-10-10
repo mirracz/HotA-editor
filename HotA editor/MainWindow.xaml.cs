@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using WPFLocalizeExtension.Providers;
 
 namespace HotA_editor
 {
@@ -19,9 +20,13 @@ namespace HotA_editor
 
         public MainWindow()
         {
+            ResxLocalizationProvider.Instance.UpdateCultureList(GetType().Assembly.FullName, "Resources");
+            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+
             InitializeComponent();
             Title = "HotA editor v0.2";
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            //WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("cs");
         }
 
         public ObservableCollection<HdatEntry> List

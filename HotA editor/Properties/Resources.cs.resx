@@ -118,30 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EncodingReadTitle" xml:space="preserve">
-    <value>Character encoding in the opened file:</value>
+    <value>Kódování znaků v otevřeném souboru:
+</value>
   </data>
   <data name="EncodingReadW1251" xml:space="preserve">
-    <value>Windows-1251 (original)</value>
+    <value>Windows-1251 (původní)</value>
   </data>
   <data name="EncodingReadW1250" xml:space="preserve">
     <value>Windows-1250</value>
   </data>
   <data name="ButtonFileOpen" xml:space="preserve">
-    <value>Open file</value>
+    <value>Otevřít soubor</value>
   </data>
   <data name="EncodingWriteTitle" xml:space="preserve">
-    <value>Character encoding in the saved file:</value>
+    <value>Kódování znaků v ukládaném souboru:</value>
   </data>
   <data name="EncodingWriteW1250" xml:space="preserve">
-    <value>Windows-1250 (with cz/pl characters)</value>
+    <value>Windows-1251 (s cz/pl znaky)</value>
   </data>
   <data name="EncodingWriteW1251" xml:space="preserve">
-    <value>Windows-1251 (original, no cz/pl characters)</value>
+    <value>Windows-1251 (původní, žádné znaky cz/pl)</value>
   </data>
   <data name="ButtonFileSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Ulož</value>
   </data>
   <data name="EditTitle" xml:space="preserve">
-    <value>File edit</value>
+    <value>Úprava souboru</value>
   </data>
 </root>
