@@ -118,8 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EncodingReadTitle" xml:space="preserve">
-    <value>Kódování znaků v otevřeném souboru:
-</value>
+    <value>Kódování znaků v otevřeném souboru:</value>
   </data>
   <data name="EncodingReadW1251" xml:space="preserve">
     <value>Windows-1251 (původní)</value>
