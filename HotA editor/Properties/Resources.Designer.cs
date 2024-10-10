@@ -176,5 +176,14 @@ namespace HotA_editor.Properties {
                 return ResourceManager.GetString("MenuItemLanguagePl", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Files.
+        /// </summary>
+        public static string SaveLoadDialogueAllFiles {
+            get {
+                return ResourceManager.GetString("SaveLoadDialogueAllFiles", resourceCulture);
+            }
+        }
     }
 }

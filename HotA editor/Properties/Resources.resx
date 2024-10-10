@@ -156,4 +156,7 @@
   <data name="MenuItemLanguagePl" xml:space="preserve">
     <value>Polish</value>
   </data>
+  <data name="SaveLoadDialogueAllFiles" xml:space="preserve">
+    <value>All Files</value>
+  </data>
 </root>

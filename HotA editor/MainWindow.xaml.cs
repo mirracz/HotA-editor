@@ -23,6 +23,8 @@ public partial class MainWindow : INotifyPropertyChanged
     {
         ResxLocalizationProvider.Instance.UpdateCultureList(GetType().Assembly.FullName, "Resources");
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+        Properties.Resources.Culture = new CultureInfo("en");
+        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("en");
 
         InitializeComponent();
         Title = "HotA editor v0.2";
@@ -56,7 +58,7 @@ public partial class MainWindow : INotifyPropertyChanged
         {
             var fileDialog = new OpenFileDialog 
             { 
-                Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*",
+                Filter = "HotA.dat|HotA.dat|" + Properties.Resources.SaveLoadDialogueAllFiles + " (*.*)|*.*",
                 FileName = "HotA.dat" 
             };
 
@@ -89,7 +91,7 @@ public partial class MainWindow : INotifyPropertyChanged
         {
             var fileDialog = new SaveFileDialog 
             {
-                Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*", 
+                Filter = "HotA.dat|HotA.dat|" + Properties.Resources.SaveLoadDialogueAllFiles + " (*.*)|*.*", 
                 FileName = "HotA.dat" 
             };
 
@@ -114,16 +116,19 @@ public partial class MainWindow : INotifyPropertyChanged
 
     private void MenuItemLanguageEn_Click(object sender, RoutedEventArgs e)
     {
+        Properties.Resources.Culture = new CultureInfo("en");
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("en");
     }
 
     private void MenuItemLanguageCz_Click(object sender, RoutedEventArgs e)
     {
+        Properties.Resources.Culture = new CultureInfo("cs");
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("cs");
     }
 
     private void MenuItemLanguagePl_Click(object sender, RoutedEventArgs e)
     {
+        Properties.Resources.Culture = new CultureInfo("pl");
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("pl");
     }
 }
