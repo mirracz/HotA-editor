@@ -1,119 +1,127 @@
-﻿using System.Text;
-using System.Windows.Data;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows;
+using System.Windows.Data;
 using WPFLocalizeExtension.Providers;
 
-namespace HotA_editor
+namespace HotA_editor;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : INotifyPropertyChanged
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : INotifyPropertyChanged
+    private ObservableCollection<HdatEntry> _list = [];
+    private HdatEntry _selectedEntry;
+
+    public MainWindow()
     {
-        readonly Hdat _hdatfile = new Hdat();
-        private ObservableCollection<HdatEntry> _list = new ObservableCollection<HdatEntry>();
-        private HdatEntry _selectedEntry;
+        ResxLocalizationProvider.Instance.UpdateCultureList(GetType().Assembly.FullName, "Resources");
+        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
 
-        public MainWindow()
-        {
-            ResxLocalizationProvider.Instance.UpdateCultureList(GetType().Assembly.FullName, "Resources");
-            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+        InitializeComponent();
+        Title = "HotA editor v0.2";
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        //WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("cs");
+    }
 
-            InitializeComponent();
-            Title = "HotA editor v0.2";
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            //WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("cs");
-        }
+    public ObservableCollection<HdatEntry> List
+    {
+        get { return _list; }
+        set { _list = value; NotifyPropertyChanged(); }
+    }
 
-        public ObservableCollection<HdatEntry> List
-        {
-            get { return _list; }
-            set { _list = value; NotifyPropertyChanged("List"); }
-        }
+    public HdatEntry SelectedEntry
+    {
+        get { return _selectedEntry; }
+        set { _selectedEntry = value; NotifyPropertyChanged(); }
+    }
 
-        public HdatEntry SelectedEntry
-        {
-            get { return _selectedEntry; }
-            set { _selectedEntry = value; NotifyPropertyChanged("SelectedEntry"); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
-
-        private void Open_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var fileDialog = new OpenFileDialog {Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*", FileName = "HotA.dat" };
-                if (fileDialog.ShowDialog() != true) return;
-
-                Grbox.IsEnabled = true;
-                var fileName = fileDialog.FileName;
-                Title = "HotA editor v0.2 -- " + fileName;
-
-                if (Open1250.IsChecked == true)
-                {
-                    List = _hdatfile.ReadFile(fileName, Encoding.GetEncoding("windows-1250"));
-                }
-
-                if (Open1251.IsChecked == true)
-                {
-                    List = _hdatfile.ReadFile(fileName, Encoding.GetEncoding("windows-1251"));
-                }
-                
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var fileDialog = new SaveFileDialog { Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*", FileName = "HotA.dat" };
-                if (fileDialog.ShowDialog() != true) return;
-
-                if (Save1251.IsChecked == true)
-                {
-                    _hdatfile.WriteFile(fileDialog.FileName, List, Encoding.GetEncoding("windows-1251"));
-                }
-
-                if (Save1250.IsChecked == true)
-                {
-                    _hdatfile.WriteFile(fileDialog.FileName, List, Encoding.GetEncoding("windows-1250"));
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
+    public event PropertyChangedEventHandler PropertyChanged;
+    private void NotifyPropertyChanged([CallerMemberName] string property = null)
+    {
+        if (property != null) 
+        { 
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }
 
-    public class TextToBooleanConverter : IValueConverter
+    private void Open_Click(object sender, RoutedEventArgs e)
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        try
         {
-            return !string.IsNullOrEmpty((string)value);
-        }
+            var fileDialog = new OpenFileDialog 
+            { 
+                Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*",
+                FileName = "HotA.dat" 
+            };
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return string.Empty;
+            if (fileDialog.ShowDialog() != true) 
+                return;
+
+            Grbox.IsEnabled = true;
+            var fileName = fileDialog.FileName;
+            Title = "HotA editor v0.2 -- " + fileName;
+
+            if (Open1250.IsChecked == true)
+            {
+                List = Hdat.ReadFile(fileName, Encoding.GetEncoding("windows-1250"));
+            }
+
+            if (Open1251.IsChecked == true)
+            {
+                List = Hdat.ReadFile(fileName, Encoding.GetEncoding("windows-1251"));
+            }
         }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
+
+    private void Save_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var fileDialog = new SaveFileDialog 
+            {
+                Filter = "HotA.dat|HotA.dat|Wszystkie pliki (*.*)|*.*", 
+                FileName = "HotA.dat" 
+            };
+
+            if (fileDialog.ShowDialog() != true) 
+                return;
+
+            if (Save1251.IsChecked == true)
+            {
+                Hdat.WriteFile(fileDialog.FileName, List, Encoding.GetEncoding("windows-1251"));
+            }
+
+            if (Save1250.IsChecked == true)
+            {
+                Hdat.WriteFile(fileDialog.FileName, List, Encoding.GetEncoding("windows-1250"));
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
+}
+
+public class TextToBooleanConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+        return !string.IsNullOrEmpty((string)value);
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+        return string.Empty;
     }
 }
