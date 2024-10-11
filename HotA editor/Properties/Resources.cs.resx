@@ -133,7 +133,7 @@
     <value>Kódování znaků v ukládaném souboru:</value>
   </data>
   <data name="EncodingWriteW1250" xml:space="preserve">
-    <value>Windows-1251 (s cz/pl znaky)</value>
+    <value>Windows-1250 (s cz/pl znaky)</value>
   </data>
   <data name="EncodingWriteW1251" xml:space="preserve">
     <value>Windows-1251 (původní, žádné znaky cz/pl)</value>
