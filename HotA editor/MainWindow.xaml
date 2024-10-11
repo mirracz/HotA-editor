@@ -14,10 +14,10 @@
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="{lex:Loc MenuItemLanguage}">
-                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguageEn}" Click="MenuItemLanguageEn_Click" IsChecked="True"/>
-                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguageCz}" Click="MenuItemLanguageCz_Click"/>
-                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguagePl}" Click="MenuItemLanguagePl_Click"/>
+            <MenuItem x:Name="LanguageMenu" Header="{lex:Loc MenuItemLanguage}">
+                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguageEn}" Tag="en" Click="MenuItemLanguageEn_Click"/>
+                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguageCz}" Tag="cs" Click="MenuItemLanguageCz_Click"/>
+                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguagePl}" Tag="pl" Click="MenuItemLanguagePl_Click"/>
             </MenuItem>
         </Menu>
         <Grid x:Name="FileGrid" DockPanel.Dock="Top" HorizontalAlignment="Stretch">

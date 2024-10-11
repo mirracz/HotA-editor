@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -21,14 +22,23 @@ public partial class MainWindow : INotifyPropertyChanged
 
     public MainWindow()
     {
+        var settingsLanguage = Properties.Settings.Default.Language;
         ResxLocalizationProvider.Instance.UpdateCultureList(GetType().Assembly.FullName, "Resources");
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
-        Properties.Resources.Culture = new CultureInfo("en");
-        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("en");
+        Properties.Resources.Culture = new CultureInfo(settingsLanguage);
+        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(settingsLanguage);
 
         InitializeComponent();
         Title = "HotA editor v0.2";
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+        foreach (var item in LanguageMenu.Items.OfType<RadioMenuItem>())
+        {
+            if (item.Tag is string str && str == settingsLanguage)
+            {
+                item.IsChecked = true;
+            }
+        }
     }
 
     public ObservableCollection<HdatEntry> List
@@ -116,20 +126,26 @@ public partial class MainWindow : INotifyPropertyChanged
 
     private void MenuItemLanguageEn_Click(object sender, RoutedEventArgs e)
     {
-        Properties.Resources.Culture = new CultureInfo("en");
-        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("en");
+        SetLanguage("en");
     }
 
     private void MenuItemLanguageCz_Click(object sender, RoutedEventArgs e)
     {
-        Properties.Resources.Culture = new CultureInfo("cs");
-        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("cs");
+        SetLanguage("cs");
     }
 
     private void MenuItemLanguagePl_Click(object sender, RoutedEventArgs e)
     {
-        Properties.Resources.Culture = new CultureInfo("pl");
-        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo("pl");
+        SetLanguage("pl");
+    }
+
+    private static void SetLanguage(string languageCode) 
+    {
+        Properties.Resources.Culture = new CultureInfo(languageCode);
+        WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(languageCode);
+
+        Properties.Settings.Default.Language = languageCode;
+        Properties.Settings.Default.Save();
     }
 }
 
