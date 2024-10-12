@@ -19,9 +19,6 @@ namespace HotA_editor;
 /// </summary>
 public partial class MainWindow : INotifyPropertyChanged
 {
-    private ObservableCollection<HdatEntry> _list = [];
-    private HdatEntry _selectedEntry;
-
     public MainWindow()
     {
         var settingsLanguage = Properties.Settings.Default.Language;
@@ -43,6 +40,8 @@ public partial class MainWindow : INotifyPropertyChanged
             }
         }
     }
+
+    #region Properties
 
     public List<DataHeader> DataHeaders { get; set; } =
     [
@@ -69,12 +68,14 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
+    private ObservableCollection<HdatEntry> _list = [];
     public ObservableCollection<HdatEntry> List
     {
         get { return _list; }
         set { _list = value; NotifyPropertyChanged(); }
     }
 
+    private HdatEntry _selectedEntry;
     public HdatEntry SelectedEntry
     {
         get { return _selectedEntry; }
@@ -153,6 +154,8 @@ public partial class MainWindow : INotifyPropertyChanged
         set { _textBoxEnabled = value; NotifyPropertyChanged(); }
     }
 
+    #endregion
+
     public event PropertyChangedEventHandler PropertyChanged;
     private void NotifyPropertyChanged([CallerMemberName] string property = null)
     {
@@ -161,6 +164,8 @@ public partial class MainWindow : INotifyPropertyChanged
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }
+
+    #region File Open
 
     private void Open_Click(object sender, RoutedEventArgs e)
     {
@@ -195,6 +200,10 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
+    #endregion
+
+    #region File Save
+
     private void Save_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -224,6 +233,10 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
+    #endregion
+
+    #region Languages
+
     private void MenuItemLanguageEn_Click(object sender, RoutedEventArgs e)
     {
         SetLanguage("en");
@@ -247,6 +260,8 @@ public partial class MainWindow : INotifyPropertyChanged
         Properties.Settings.Default.Language = languageCode;
         Properties.Settings.Default.Save();
     }
+
+    #endregion
 
     private void ListViewItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
