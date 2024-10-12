@@ -39,24 +39,24 @@ class Hdat
 
                 if (tmp.Int2 > 0)
                 {
-                    tmp.Data1 = ReadString(ref reader, tmp.Int2);
+                    tmp.Data[0] = ReadString(ref reader, tmp.Int2);
                 }
                 else
                 {
-                    tmp.Data1 = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data[0] = ReadString(ref reader, reader.ReadInt32());
                 }
 
-                tmp.Data2 = ReadString(ref reader, reader.ReadInt32());
-                tmp.Data3 = ReadString(ref reader, reader.ReadInt32());
-                tmp.Data4 = ReadString(ref reader, reader.ReadInt32());
-                tmp.Data5 = ReadString(ref reader, reader.ReadInt32());
-                tmp.Data6 = ReadString(ref reader, reader.ReadInt32());
-                tmp.Data7 = ReadString(ref reader, reader.ReadInt32());
-                tmp.Data8 = ReadString(ref reader, reader.ReadInt32());
+                tmp.Data[1] = ReadString(ref reader, reader.ReadInt32());
+                tmp.Data[2] = ReadString(ref reader, reader.ReadInt32());
+                tmp.Data[3] = ReadString(ref reader, reader.ReadInt32());
+                tmp.Data[4] = ReadString(ref reader, reader.ReadInt32());
+                tmp.Data[5] = ReadString(ref reader, reader.ReadInt32());
+                tmp.Data[6] = ReadString(ref reader, reader.ReadInt32());
+                tmp.Data[7] = ReadString(ref reader, reader.ReadInt32());
 
                 if (tmp.Int2 > 0)
                 {
-                    tmp.NewData = ReadString(ref reader, reader.ReadInt32());
+                    tmp.Data[8] = ReadString(ref reader, reader.ReadInt32());
                 }
 
                 var exists = ExtraDataExist(ref reader);
@@ -124,18 +124,18 @@ class Hdat
                 writer.Write(t.Int2);
             }
 
-            WriteString(ref writer, t.Data1);
-            WriteString(ref writer, t.Data2);
-            WriteString(ref writer, t.Data3);
-            WriteString(ref writer, t.Data4);
-            WriteString(ref writer, t.Data5);
-            WriteString(ref writer, t.Data6);
-            WriteString(ref writer, t.Data7);
-            WriteString(ref writer, t.Data8);
+            WriteString(ref writer, t.Data[0]);
+            WriteString(ref writer, t.Data[1]);
+            WriteString(ref writer, t.Data[2]);
+            WriteString(ref writer, t.Data[3]);
+            WriteString(ref writer, t.Data[4]);
+            WriteString(ref writer, t.Data[5]);
+            WriteString(ref writer, t.Data[6]);
+            WriteString(ref writer, t.Data[7]);
 
             if (t.Int2 > 0)
             {
-                WriteString(ref writer, t.NewData);
+                WriteString(ref writer, t.Data[8]);
             }
 
             // chceck if extra data exist
