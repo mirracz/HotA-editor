@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace HotA_editor;
@@ -23,6 +24,8 @@ public class HdatEntry : INotifyPropertyChanged
     private byte[] _data9;
     private int[] _data10;
 
+    public List<string> Data { get; set; } = [null, null, null, null, null, null, null, null, null];
+
     public string Name
     {
         get { return _name; }
@@ -38,55 +41,55 @@ public class HdatEntry : INotifyPropertyChanged
     public string Data1
     {
         get { return _data1; }
-        set { _data1 = value; NotifyPropertyChanged(); }
+        set { _data1 = value; NotifyPropertyChanged(); Data[0] = value; }
     }
 
     public string Data2
     {
         get { return _data2; }
-        set { _data2 = value; NotifyPropertyChanged(); }
+        set { _data2 = value; NotifyPropertyChanged(); Data[1] = value; }
     }
 
     public string Data3
     {
         get { return _data3; }
-        set { _data3 = value; NotifyPropertyChanged(); }
+        set { _data3 = value; NotifyPropertyChanged(); Data[2] = value; }
     }
 
     public string Data4
     {
         get { return _data4; }
-        set { _data4 = value; NotifyPropertyChanged(); }
+        set { _data4 = value; NotifyPropertyChanged(); Data[3] = value; }
     }
 
     public string Data5
     {
         get { return _data5; }
-        set { _data5 = value; NotifyPropertyChanged(); }
+        set { _data5 = value; NotifyPropertyChanged(); Data[4] = value; }
     }
 
     public string Data6
     {
         get { return _data6; }
-        set { _data6 = value; NotifyPropertyChanged(); }
+        set { _data6 = value; NotifyPropertyChanged(); Data[5] = value; }
     }
 
     public string Data7
     {
         get { return _data7; }
-        set { _data7 = value; NotifyPropertyChanged(); }
+        set { _data7 = value; NotifyPropertyChanged(); Data[6] = value; }
     }
 
     public string Data8
     {
         get { return _data8; }
-        set { _data8 = value; NotifyPropertyChanged(); }
+        set { _data8 = value; NotifyPropertyChanged(); Data[7] = value; }
     }
 
     public string NewData
     {
         get { return _newData; }
-        set { _newData = value; NotifyPropertyChanged(); }
+        set { _newData = value; NotifyPropertyChanged(); Data[8] = value; }
     }
 
     public byte[] Data9

@@ -1,13 +1,15 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
-using System.Windows.Data;
+using System.Windows.Controls;
 using WPFLocalizeExtension.Providers;
 
 namespace HotA_editor;
@@ -28,6 +30,7 @@ public partial class MainWindow : INotifyPropertyChanged
         Properties.Resources.Culture = new CultureInfo(settingsLanguage);
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(settingsLanguage);
 
+        DataContext = this;
         InitializeComponent();
         Title = "HotA editor v0.2";
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -41,6 +44,31 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
+    public List<DataHeader> DataHeaders { get; set; } =
+    [
+        new DataHeader("Data1"),
+        new DataHeader("Data2"),
+        new DataHeader("Data3"),
+        new DataHeader("Data4"),
+        new DataHeader("Data5"),
+        new DataHeader("Data6"),
+        new DataHeader("Data7"),
+        new DataHeader("Data8"),
+        new DataHeader("NewData")
+    ];
+
+    private int _selectedDataIndex;
+    public int SelectedDataIndex
+    {
+        get { return _selectedDataIndex; }
+        set 
+        { 
+            _selectedDataIndex = value; 
+            NotifyPropertyChanged();
+            SelectData();
+        }
+    }
+
     public ObservableCollection<HdatEntry> List
     {
         get { return _list; }
@@ -50,14 +78,86 @@ public partial class MainWindow : INotifyPropertyChanged
     public HdatEntry SelectedEntry
     {
         get { return _selectedEntry; }
-        set { _selectedEntry = value; NotifyPropertyChanged(); }
+        set 
+        { 
+            _selectedEntry = value; 
+            NotifyPropertyChanged(); 
+
+            Debug.Assert(_selectedEntry == null || _selectedEntry.Data.Count == DataHeaders.Count);
+
+            for (int i = 0; i < _selectedEntry.Data.Count; i++)
+            {
+                DataHeaders[i].Enabled = !string.IsNullOrEmpty(_selectedEntry.Data[i]);
+            }
+
+            // if current data header is disabled in the new entry
+            if (!DataHeaders[SelectedDataIndex].Enabled) 
+            {
+                TextBoxEnabled = false;
+                // Select the first non-disabled data header
+                for (int i = 0; i < DataHeaders.Count; i++)
+                {
+                    if (DataHeaders[i].Enabled)
+                    {
+                        SelectedDataIndex = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                SelectData();
+            }
+        }
+    }
+
+    private void SelectData()
+    {
+        if (SelectedEntry != null && DataHeaders[SelectedDataIndex].Enabled)
+        {
+            _editedData = SelectedEntry.Data[SelectedDataIndex];
+            NotifyPropertyChanged(nameof(EditedData));
+            TextBoxEnabled = true;
+        }
+        else
+        {
+            _editedData = null;
+            NotifyPropertyChanged(nameof(EditedData));
+            TextBoxEnabled = false;
+        }
+    }
+
+    private string _editedData;
+    public string EditedData
+    {
+        get { return _editedData; }
+        set
+        {
+            if (_editedData != value)
+            {
+                _editedData = value;
+                NotifyPropertyChanged();
+
+                if (SelectedEntry != null && DataHeaders[SelectedDataIndex].Enabled)
+                {
+                    SelectedEntry.Data[SelectedDataIndex] = _editedData;
+                }
+            }
+        }
+    }
+
+    private bool _textBoxEnabled;
+    public bool TextBoxEnabled
+    {
+        get { return _textBoxEnabled; }
+        set { _textBoxEnabled = value; NotifyPropertyChanged(); }
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
     private void NotifyPropertyChanged([CallerMemberName] string property = null)
     {
-        if (property != null) 
-        { 
+        if (property != null)
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }
@@ -66,13 +166,13 @@ public partial class MainWindow : INotifyPropertyChanged
     {
         try
         {
-            var fileDialog = new OpenFileDialog 
-            { 
+            var fileDialog = new OpenFileDialog
+            {
                 Filter = "HotA.dat|HotA.dat|" + Properties.Resources.SaveLoadDialogueAllFiles + " (*.*)|*.*",
-                FileName = "HotA.dat" 
+                FileName = "HotA.dat"
             };
 
-            if (fileDialog.ShowDialog() != true) 
+            if (fileDialog.ShowDialog() != true)
                 return;
 
             Grbox.IsEnabled = true;
@@ -99,13 +199,13 @@ public partial class MainWindow : INotifyPropertyChanged
     {
         try
         {
-            var fileDialog = new SaveFileDialog 
+            var fileDialog = new SaveFileDialog
             {
-                Filter = "HotA.dat|HotA.dat|" + Properties.Resources.SaveLoadDialogueAllFiles + " (*.*)|*.*", 
-                FileName = "HotA.dat" 
+                Filter = "HotA.dat|HotA.dat|" + Properties.Resources.SaveLoadDialogueAllFiles + " (*.*)|*.*",
+                FileName = "HotA.dat"
             };
 
-            if (fileDialog.ShowDialog() != true) 
+            if (fileDialog.ShowDialog() != true)
                 return;
 
             if (Save1251.IsChecked == true)
@@ -139,7 +239,7 @@ public partial class MainWindow : INotifyPropertyChanged
         SetLanguage("pl");
     }
 
-    private static void SetLanguage(string languageCode) 
+    private static void SetLanguage(string languageCode)
     {
         Properties.Resources.Culture = new CultureInfo(languageCode);
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(languageCode);
@@ -147,17 +247,33 @@ public partial class MainWindow : INotifyPropertyChanged
         Properties.Settings.Default.Language = languageCode;
         Properties.Settings.Default.Save();
     }
+
+    private void ListViewItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (sender is ListViewItem item && item.DataContext is DataHeader header && !header.Enabled)
+        {
+            e.Handled = true;
+        }
+    }
 }
 
-public class TextToBooleanConverter : IValueConverter
+public class DataHeader(string name) : INotifyPropertyChanged
 {
-    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    public string Name { get; set; } = name;
+
+    private bool _enabled;
+    public bool Enabled 
     {
-        return !string.IsNullOrEmpty((string)value);
+        get { return _enabled; } 
+        set { _enabled = value; NotifyPropertyChanged(); }
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    public event PropertyChangedEventHandler PropertyChanged;
+    private void NotifyPropertyChanged([CallerMemberName] string property = null)
     {
-        return string.Empty;
+        if (property != null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
     }
 }
