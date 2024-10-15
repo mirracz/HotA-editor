@@ -139,7 +139,7 @@
     <value>Windows-1251 (original, no cz/pl characters)</value>
   </data>
   <data name="ButtonFileSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Save file</value>
   </data>
   <data name="EditTitle" xml:space="preserve">
     <value>File edit</value>

@@ -70,7 +70,7 @@ namespace HotA_editor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to Save file.
         /// </summary>
         public static string ButtonFileSave {
             get {

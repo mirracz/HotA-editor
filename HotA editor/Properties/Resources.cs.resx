@@ -139,7 +139,7 @@
     <value>Windows-1251 (původní, žádné znaky cz/pl)</value>
   </data>
   <data name="ButtonFileSave" xml:space="preserve">
-    <value>Uložit</value>
+    <value>Uložit soubor</value>
   </data>
   <data name="EditTitle" xml:space="preserve">
     <value>Úprava souboru</value>
