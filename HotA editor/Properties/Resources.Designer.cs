@@ -185,5 +185,14 @@ namespace HotA_editor.Properties {
                 return ResourceManager.GetString("SaveLoadDialogueAllFiles", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string TabEdit {
+            get {
+                return ResourceManager.GetString("TabEdit", resourceCulture);
+            }
+        }
     }
 }

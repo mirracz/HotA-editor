@@ -159,4 +159,7 @@
   <data name="SaveLoadDialogueAllFiles" xml:space="preserve">
     <value>All Files</value>
   </data>
+  <data name="TabEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>

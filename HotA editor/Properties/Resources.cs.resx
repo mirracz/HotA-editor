@@ -159,4 +159,7 @@
   <data name="SaveLoadDialogueAllFiles" xml:space="preserve">
     <value>Všechny soubory</value>
   </data>
+  <data name="TabEdit" xml:space="preserve">
+    <value>Úprava</value>
+  </data>
 </root>
