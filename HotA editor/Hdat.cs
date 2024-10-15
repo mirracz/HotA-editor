@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 
@@ -6,9 +7,9 @@ namespace HotA_editor;
 
 class Hdat
 {
-    internal static ObservableCollection<HdatEntry> ReadFile(string path, Encoding enc)
+    internal static HDatList ReadFile(string path, Encoding enc)
     {
-        var entries = new ObservableCollection<HdatEntry>();
+        var entries = new HDatList() { FileName = path };
 
         if (!File.Exists(path))
         {
@@ -199,4 +200,9 @@ class Hdat
             stream.Write(t);
         }
     }
+}
+
+class HDatList : List<HdatEntry>
+{
+    public string FileName { get; set; }
 }

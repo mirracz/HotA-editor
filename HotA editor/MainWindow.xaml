@@ -23,8 +23,8 @@
                 <local:RadioMenuItem Header="{lex:Loc MenuItemLanguagePl}" Tag="pl" Click="MenuItemLanguagePl_Click"/>
             </MenuItem>
         </Menu>
-        <TabControl>
-            <TabItem Header="{lex:Loc TabEdit}">
+        <TabControl SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="{lex:Loc TabEdit}" >
                 <DockPanel>
                     <Grid x:Name="FileGrid" DockPanel.Dock="Top" HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -33,7 +33,7 @@
                         </Grid.ColumnDefinitions>
                         <DockPanel x:Name="FileOpenDockPanel">
                             <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="10 0 0 0" HorizontalAlignment="Stretch">
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{lex:Loc EncodingReadTitle}"/>
+                                <TextBlock TextWrapping="Wrap" Text="{lex:Loc EncodingReadTitle}"/>
                                 <RadioButton Content="{lex:Loc EncodingReadW1251}" GroupName="Open" x:Name="Open1251"/>
                                 <RadioButton Content="{lex:Loc EncodingReadW1250}" GroupName="Open" x:Name="Open1250" IsChecked="True"/>
                             </StackPanel>
@@ -111,6 +111,39 @@
                                 HorizontalScrollBarVisibility="Auto"/>
                         </Grid>
                     </GroupBox>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="{lex:Loc TabDiff}">
+                <DockPanel>
+                    <Grid x:Name="FileDiffGrid" DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Margin="10 0 0 0">
+                            <DockPanel x:Name="FileDiffPanel1">
+                                <StackPanel DockPanel.Dock="Left" Orientation="Vertical" HorizontalAlignment="Stretch">
+                                    <TextBlock TextWrapping="Wrap" Text="{lex:Loc EncodingReadTitle}"/>
+                                    <RadioButton Content="{lex:Loc EncodingReadW1251}" GroupName="OpenDiff1" x:Name="OpenDiff1_1251"/>
+                                    <RadioButton Content="{lex:Loc EncodingReadW1250}" GroupName="OpenDiff1" x:Name="OpenDiff1_1250" IsChecked="True"/>
+                                </StackPanel>
+                                <Button DockPanel.Dock="Right" Content="{lex:Loc ButtonFileOpenDiff1}" Click="OpenDiff1_Click" Height="30" Width="100"/>
+                            </DockPanel>
+                            <TextBlock DockPanel.Dock="Bottom" Text="{lex:Loc DiffFileLoaded}" Foreground="Green" Visibility="Hidden" x:Name="Diff1Confirm"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <DockPanel x:Name="FileDiffPanel2">
+                                <StackPanel DockPanel.Dock="Left" Orientation="Vertical" HorizontalAlignment="Stretch">
+                                    <TextBlock TextWrapping="Wrap" Text="{lex:Loc EncodingReadTitle}"/>
+                                    <RadioButton Content="{lex:Loc EncodingReadW1251}" GroupName="OpenDiff2" x:Name="OpenDiff2_1251" />
+                                    <RadioButton Content="{lex:Loc EncodingReadW1250}" GroupName="OpenDiff2" x:Name="OpenDiff2_1250" IsChecked="True"/>
+                                </StackPanel>
+                                <Button DockPanel.Dock="Right" Content="{lex:Loc ButtonFileOpenDiff2}" Click="OpenDiff2_Click" Height="30" Width="100"/>
+                            </DockPanel>
+                            <TextBlock DockPanel.Dock="Bottom" Text="{lex:Loc DiffFileLoaded}" Foreground="Green" Visibility="Hidden" x:Name="Diff2Confirm"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid></Grid>
                 </DockPanel>
             </TabItem>
         </TabControl>

@@ -19,6 +19,12 @@ namespace HotA_editor;
 /// </summary>
 public partial class MainWindow : INotifyPropertyChanged
 {
+    public const string TITLE_STRING = "HotA editor v0.2";
+
+    private string _editFileName;
+    private HDatList _diff1List;
+    private HDatList _diff2List;
+
     public MainWindow()
     {
         var settingsLanguage = Properties.Settings.Default.Language;
@@ -29,7 +35,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
         DataContext = this;
         InitializeComponent();
-        Title = "HotA editor v0.2";
+        Title = TITLE_STRING;
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
         foreach (var item in LanguageMenu.Items.OfType<RadioMenuItem>())
@@ -60,9 +66,9 @@ public partial class MainWindow : INotifyPropertyChanged
     public int SelectedDataIndex
     {
         get { return _selectedDataIndex; }
-        set 
-        { 
-            _selectedDataIndex = value; 
+        set
+        {
+            _selectedDataIndex = value;
             NotifyPropertyChanged();
             SelectData();
         }
@@ -79,10 +85,10 @@ public partial class MainWindow : INotifyPropertyChanged
     public HdatEntry SelectedEntry
     {
         get { return _selectedEntry; }
-        set 
-        { 
-            _selectedEntry = value; 
-            NotifyPropertyChanged(); 
+        set
+        {
+            _selectedEntry = value;
+            NotifyPropertyChanged();
 
             Debug.Assert(_selectedEntry == null || _selectedEntry.Data.Count == DataHeaders.Count);
 
@@ -92,7 +98,7 @@ public partial class MainWindow : INotifyPropertyChanged
             }
 
             // if current data header is disabled in the new entry
-            if (!DataHeaders[SelectedDataIndex].Enabled) 
+            if (!DataHeaders[SelectedDataIndex].Enabled)
             {
                 TextBoxEnabled = false;
                 // Select the first non-disabled data header
@@ -165,9 +171,9 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    #region File Open
+    #region Files
 
-    private void Open_Click(object sender, RoutedEventArgs e)
+    private static HDatList OpenFile(bool use1250encoding)
     {
         try
         {
@@ -178,31 +184,37 @@ public partial class MainWindow : INotifyPropertyChanged
             };
 
             if (fileDialog.ShowDialog() != true)
-                return;
+                return null;
 
-            Grbox.IsEnabled = true;
             var fileName = fileDialog.FileName;
-            Title = "HotA editor v0.2 -- " + fileName;
 
-            if (Open1250.IsChecked == true)
+            if (use1250encoding)
             {
-                List = Hdat.ReadFile(fileName, Encoding.GetEncoding("windows-1250"));
+                return Hdat.ReadFile(fileName, Encoding.GetEncoding("windows-1250"));
             }
-
-            if (Open1251.IsChecked == true)
+            else
             {
-                List = Hdat.ReadFile(fileName, Encoding.GetEncoding("windows-1251"));
+                return Hdat.ReadFile(fileName, Encoding.GetEncoding("windows-1251"));
             }
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
+            return null;
         }
     }
 
-    #endregion
-
-    #region File Save
+    private void Open_Click(object sender, RoutedEventArgs e)
+    {
+        var list = OpenFile(Open1250.IsChecked == true);
+        if (list != null)
+        {
+            Grbox.IsEnabled = true;
+            _editFileName = list.FileName;
+            SetEditTitle();
+            List = new ObservableCollection<HdatEntry>(list);
+        }
+    }
 
     private void Save_Click(object sender, RoutedEventArgs e)
     {
@@ -230,6 +242,34 @@ public partial class MainWindow : INotifyPropertyChanged
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
+        }
+    }
+
+    private void OpenDiff1_Click(object sender, RoutedEventArgs e)
+    {
+        var list = OpenFile(OpenDiff1_1250.IsChecked == true);
+        if (list != null)
+        {
+            //Title = TITLE_STRING + " -- " + list.FileName;
+            //List = new ObservableCollection<HdatEntry>(list);
+            _diff1List = list;
+            Diff1Confirm.Visibility = Visibility.Visible;
+            SetDiffTitle();
+            TryCompareDiff();
+        }
+    }
+
+    private void OpenDiff2_Click(object sender, RoutedEventArgs e)
+    {
+        var list = OpenFile(OpenDiff2_1250.IsChecked == true);
+        if (list != null)
+        {
+            //Title = TITLE_STRING + " -- " + list.FileName;
+            //List = new ObservableCollection<HdatEntry>(list);
+            _diff2List = list;
+            Diff2Confirm.Visibility = Visibility.Visible;
+            SetDiffTitle();
+            TryCompareDiff();
         }
     }
 
@@ -263,6 +303,11 @@ public partial class MainWindow : INotifyPropertyChanged
 
     #endregion
 
+    private void TryCompareDiff()
+    {
+
+    }
+
     private void ListViewItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (sender is ListViewItem item && item.DataContext is DataHeader header && !header.Enabled)
@@ -270,6 +315,49 @@ public partial class MainWindow : INotifyPropertyChanged
             e.Handled = true;
         }
     }
+
+    #region Tabs
+
+    private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is TabControl tabControl)
+        {
+            if (tabControl.SelectedIndex == 0)
+            {
+                SetEditTitle();
+            }
+            else if (tabControl.SelectedIndex == 1)
+            {
+                SetDiffTitle();
+            }
+        }
+    }
+
+    private void SetEditTitle()
+    {
+        if (_editFileName == null)
+        {
+            Title = TITLE_STRING;
+        }
+        else
+        {
+            Title = TITLE_STRING + " -- " + Properties.Resources.TabEdit + " -- " + _editFileName;
+        }
+    }
+
+    private void SetDiffTitle()
+    {
+        if (_diff1List == null && _diff2List == null)
+        {
+            Title = TITLE_STRING;
+        }
+        else
+        {
+            Title = string.Format("{0} -- {1} -- {2} || {3}", TITLE_STRING, Properties.Resources.TabDiff, _diff1List?.FileName ?? "???", _diff2List?.FileName ?? "???");
+        }
+    }
+
+    #endregion
 }
 
 public class DataHeader(string name) : INotifyPropertyChanged

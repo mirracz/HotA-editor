@@ -70,11 +70,38 @@ namespace HotA_editor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open file 1.
+        /// </summary>
+        public static string ButtonFileOpenDiff1 {
+            get {
+                return ResourceManager.GetString("ButtonFileOpenDiff1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open file 2.
+        /// </summary>
+        public static string ButtonFileOpenDiff2 {
+            get {
+                return ResourceManager.GetString("ButtonFileOpenDiff2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save file.
         /// </summary>
         public static string ButtonFileSave {
             get {
                 return ResourceManager.GetString("ButtonFileSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loaded.
+        /// </summary>
+        public static string DiffFileLoaded {
+            get {
+                return ResourceManager.GetString("DiffFileLoaded", resourceCulture);
             }
         }
         
@@ -183,6 +210,15 @@ namespace HotA_editor.Properties {
         public static string SaveLoadDialogueAllFiles {
             get {
                 return ResourceManager.GetString("SaveLoadDialogueAllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diff.
+        /// </summary>
+        public static string TabDiff {
+            get {
+                return ResourceManager.GetString("TabDiff", resourceCulture);
             }
         }
         

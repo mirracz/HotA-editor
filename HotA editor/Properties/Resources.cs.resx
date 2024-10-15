@@ -162,4 +162,16 @@
   <data name="TabEdit" xml:space="preserve">
     <value>Úprava</value>
   </data>
+  <data name="ButtonFileOpenDiff1" xml:space="preserve">
+    <value>Otevřít soubor 1</value>
+  </data>
+  <data name="ButtonFileOpenDiff2" xml:space="preserve">
+    <value>Otevřít soubor 2</value>
+  </data>
+  <data name="DiffFileLoaded" xml:space="preserve">
+    <value>Načteno</value>
+  </data>
+  <data name="TabDiff" xml:space="preserve">
+    <value>Diff</value>
+  </data>
 </root>

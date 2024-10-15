@@ -162,4 +162,16 @@
   <data name="TabEdit" xml:space="preserve">
     <value>Edycja</value>
   </data>
+  <data name="ButtonFileOpenDiff1" xml:space="preserve">
+    <value>Otwórz plik 1</value>
+  </data>
+  <data name="ButtonFileOpenDiff2" xml:space="preserve">
+    <value>Otwórz plik 2</value>
+  </data>
+  <data name="DiffFileLoaded" xml:space="preserve">
+    <value>Załadowano</value>
+  </data>
+  <data name="TabDiff" xml:space="preserve">
+    <value>Diff</value>
+  </data>
 </root>
