@@ -97,11 +97,29 @@ namespace HotA_editor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit this data.
+        /// </summary>
+        public static string ButtonGoToEdit {
+            get {
+                return ResourceManager.GetString("ButtonGoToEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loaded.
         /// </summary>
         public static string DiffFileLoaded {
             get {
                 return ResourceManager.GetString("DiffFileLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File diff.
+        /// </summary>
+        public static string DiffTitle {
+            get {
+                return ResourceManager.GetString("DiffTitle", resourceCulture);
             }
         }
         

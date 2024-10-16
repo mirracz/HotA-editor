@@ -174,4 +174,10 @@
   <data name="TabDiff" xml:space="preserve">
     <value>Diff</value>
   </data>
+  <data name="DiffTitle" xml:space="preserve">
+    <value>File diff</value>
+  </data>
+  <data name="ButtonGoToEdit" xml:space="preserve">
+    <value>Edit this data</value>
+  </data>
 </root>

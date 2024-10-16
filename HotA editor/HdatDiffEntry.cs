@@ -4,42 +4,17 @@ using System.Runtime.CompilerServices;
 
 namespace HotA_editor;
 
-public class HdatEntry : INotifyPropertyChanged, IHdatEntry
+public class HdatDiffEntry : INotifyPropertyChanged, IHdatEntry
 {
     private string _name;
-    private string _folderName;
-
-    public int Int1 { get; set; }
-    public int Int2 { get; set; }
-
-    private byte[] _data9;
-    private int[] _data10;
-
-    public List<string> Data { get; } = [null, null, null, null, null, null, null, null, null];
-
     public string Name
     {
         get { return _name; }
         set { _name = value; NotifyPropertyChanged(); }
     }
 
-    public string FolderName
-    {
-        get { return _folderName; }
-        set { _folderName = value; NotifyPropertyChanged(); }
-    }
-
-    public byte[] Data9
-    {
-        get { return _data9; }
-        set { _data9 = value; NotifyPropertyChanged(); }
-    }
-
-    public int[] Data10
-    {
-        get { return _data10; }
-        set { _data10 = value; NotifyPropertyChanged(); }
-    }
+    public List<string> Data1 { get; } = [null, null, null, null, null, null, null, null, null];
+    public List<string> Data2 { get; } = [null, null, null, null, null, null, null, null, null];
 
     public string DisplayMember
     {
