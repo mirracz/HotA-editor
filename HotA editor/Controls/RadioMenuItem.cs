@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HotA_editor;
+namespace HotA_editor.Controls;
 
 public class RadioMenuItem : MenuItem
 {
-    public RadioMenuItem() 
-    { 
+    public RadioMenuItem()
+    {
         IsCheckable = true;
         PreviewMouseLeftButtonUp += RadioMenuItem_PreviewMouseLeftButtonUp;
     }

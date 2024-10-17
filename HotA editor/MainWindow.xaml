@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lex="http://wpflocalizeextension.codeplex.com"
     xmlns:local="clr-namespace:HotA_editor"
+    xmlns:controls="clr-namespace:HotA_editor.Controls"
     d:DataContext="{d:DesignInstance Type=local:MainWindow}"
     mc:Ignorable="d"
     x:Class="HotA_editor.MainWindow"
@@ -18,9 +19,9 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem x:Name="LanguageMenu" Header="{lex:Loc MenuItemLanguage}">
-                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguageEn}" Tag="en" Click="MenuItemLanguageEn_Click"/>
-                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguageCz}" Tag="cs" Click="MenuItemLanguageCz_Click"/>
-                <local:RadioMenuItem Header="{lex:Loc MenuItemLanguagePl}" Tag="pl" Click="MenuItemLanguagePl_Click"/>
+                <controls:RadioMenuItem Header="{lex:Loc MenuItemLanguageEn}" Tag="en" Click="MenuItemLanguageEn_Click"/>
+                <controls:RadioMenuItem Header="{lex:Loc MenuItemLanguageCz}" Tag="cs" Click="MenuItemLanguageCz_Click"/>
+                <controls:RadioMenuItem Header="{lex:Loc MenuItemLanguagePl}" Tag="pl" Click="MenuItemLanguagePl_Click"/>
             </MenuItem>
         </Menu>
         <TabControl x:Name="TabControl"  SelectionChanged="TabControl_SelectionChanged">
@@ -48,7 +49,7 @@
                             <Button DockPanel.Dock="Right" Content="{lex:Loc ButtonFileSave}" Click="Save_Click" Height="30" Width="100"/>
                         </DockPanel>
                     </Grid>
-                    <GroupBox x:Name="Grbox" Header="{lex:Loc EditTitle}" Margin="10 0 0 0" IsEnabled="True">
+                    <GroupBox x:Name="GrBoxEdit" Header="{lex:Loc EditTitle}" Margin="10 0 0 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -60,16 +61,16 @@
                             </Grid.RowDefinitions>
                             <ListBox 
                                 Grid.RowSpan="2" 
-                                ItemsSource="{Binding List, ElementName=Ui}" 
-                                SelectedItem="{Binding SelectedEntry, ElementName=Ui, Mode=TwoWay}" 
+                                ItemsSource="{Binding EditVM.List}" 
+                                SelectedItem="{Binding EditVM.SelectedEntry, Mode=TwoWay}" 
                                 DisplayMemberPath="DisplayMember" 
                                 SelectedIndex="0" 
                                 Width="120"/>
                             <ListView 
                                 Grid.Column="1" 
                                 Margin="2 0 0 0"
-                                ItemsSource="{Binding DataHeaders}" 
-                                SelectedIndex="{Binding SelectedDataIndex, Mode=TwoWay}">
+                                ItemsSource="{Binding EditVM.DataHeaders}" 
+                                SelectedIndex="{Binding EditVM.SelectedDataIndex, Mode=TwoWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <RadioButton 
@@ -105,8 +106,8 @@
                                 Grid.Row="1" 
                                 Margin="2 2 0 0"
                                 AcceptsReturn="True" 
-                                IsEnabled="{Binding TextBoxEnabled}"
-                                Text="{Binding EditedData, UpdateSourceTrigger=PropertyChanged}" 
+                                IsEnabled="{Binding EditVM.TextBoxEnabled}"
+                                Text="{Binding EditVM.EditedData, UpdateSourceTrigger=PropertyChanged}" 
                                 VerticalScrollBarVisibility="Auto" 
                                 HorizontalScrollBarVisibility="Auto"/>
                         </Grid>
@@ -143,7 +144,7 @@
                             <TextBlock DockPanel.Dock="Bottom" Text="{lex:Loc DiffFileLoaded}" Foreground="Green" Visibility="Hidden" x:Name="Diff2Confirm"/>
                         </StackPanel>
                     </Grid>
-                    <GroupBox x:Name="GrboxDiff" Header="{lex:Loc DiffTitle}" Margin="10 0 0 0">
+                    <GroupBox x:Name="GrBoxDiff" Header="{lex:Loc DiffTitle}" Margin="10 0 0 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -157,8 +158,8 @@
                             </Grid.RowDefinitions>
                             <ListBox 
                                 Grid.RowSpan="3" 
-                                ItemsSource="{Binding DiffList, ElementName=Ui}" 
-                                SelectedItem="{Binding SelectedDiffEntry, ElementName=Ui}" 
+                                ItemsSource="{Binding DiffVM.DiffList}" 
+                                SelectedItem="{Binding DiffVM.SelectedDiffEntry, Mode=TwoWay}" 
                                 DisplayMemberPath="DisplayMember" 
                                 SelectedIndex="0" 
                                 Width="120"/>
@@ -166,8 +167,8 @@
                                 Grid.Column="1" 
                                 Grid.ColumnSpan="2"
                                 Margin="2 0 0 0"
-                                ItemsSource="{Binding DataHeaders}" 
-                                SelectedIndex="{Binding SelectedDataIndex, Mode=TwoWay}">
+                                ItemsSource="{Binding DiffVM.DataHeaders}" 
+                                SelectedIndex="{Binding DiffVM.SelectedDataIndex, Mode=TwoWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <RadioButton 
@@ -203,7 +204,7 @@
                                 Grid.Row="1" 
                                 Margin="2 2 0 0"
                                 IsReadOnly="True"
-                                Text="{Binding Diff1Data}" 
+                                Text="{Binding DiffVM.Diff1Data}" 
                                 VerticalScrollBarVisibility="Auto" 
                                 HorizontalScrollBarVisibility="Auto"/>
                             <TextBox 
@@ -211,7 +212,7 @@
                                 Grid.Row="1" 
                                 Margin="2 2 0 0"
                                 IsReadOnly="True"
-                                Text="{Binding Diff2Data}" 
+                                Text="{Binding DiffVM.Diff2Data}" 
                                 VerticalScrollBarVisibility="Auto" 
                                 HorizontalScrollBarVisibility="Auto"/>
                             <Button 

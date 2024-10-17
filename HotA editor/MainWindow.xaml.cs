@@ -1,9 +1,11 @@
-﻿using Microsoft.Win32;
+﻿using HotA_editor.Common;
+using HotA_editor.Controls;
+using HotA_editor.ViewModels;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -19,7 +21,7 @@ namespace HotA_editor;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : INotifyPropertyChanged
+public partial class MainWindow
 {
     public const string TITLE_STRING = "HotA editor v0.2";
 
@@ -35,6 +37,9 @@ public partial class MainWindow : INotifyPropertyChanged
         Properties.Resources.Culture = new CultureInfo(settingsLanguage);
         WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(settingsLanguage);
 
+        EditVM = new EditViewModel();
+        DiffVM = new DiffViewModel();
+
         DataContext = this;
         InitializeComponent();
         Title = TITLE_STRING;
@@ -49,208 +54,25 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    #region Properties
+    #region Dependency Properties
 
-    public List<DataHeader> DataHeaders { get; set; } =
-    [
-        new DataHeader("Data1"),
-        new DataHeader("Data2"),
-        new DataHeader("Data3"),
-        new DataHeader("Data4"),
-        new DataHeader("Data5"),
-        new DataHeader("Data6"),
-        new DataHeader("Data7"),
-        new DataHeader("Data8"),
-        new DataHeader("NewData")
-    ];
-
-    private int _selectedDataIndex;
-    public int SelectedDataIndex
+    public EditViewModel EditVM
     {
-        get { return _selectedDataIndex; }
-        set
-        {
-            _selectedDataIndex = value;
-            NotifyPropertyChanged();
-            SelectData();
-        }
+        get { return (EditViewModel)GetValue(EditVMProperty); }
+        set { SetValue(EditVMProperty, value); }
     }
 
-    private ObservableCollection<HdatEntry> _list = [];
-    public ObservableCollection<HdatEntry> List
+    public static readonly DependencyProperty EditVMProperty = DependencyProperty.Register(nameof(EditVM), typeof(EditViewModel), typeof(MainWindow));
+
+    public DiffViewModel DiffVM
     {
-        get { return _list; }
-        set { _list = value; NotifyPropertyChanged(); }
+        get { return (DiffViewModel)GetValue(DiffVMProperty); }
+        set { SetValue(DiffVMProperty, value); }
     }
 
-    private ObservableCollection<HdatDiffEntry> _diffList = [];
-    public ObservableCollection<HdatDiffEntry> DiffList
-    {
-        get { return _diffList; }
-        set { _diffList = value; NotifyPropertyChanged(); }
-    }
-
-    private HdatEntry _selectedEntry;
-    public HdatEntry SelectedEntry
-    {
-        get { return _selectedEntry; }
-        set
-        {
-            _selectedEntry = value;
-            NotifyPropertyChanged();
-
-            Debug.Assert(_selectedEntry == null || _selectedEntry.Data.Count == DataHeaders.Count);
-
-            if (_selectedEntry == null)
-            {
-                for (int i = 0; i < DataHeaders.Count; i++)
-                {
-                    DataHeaders[i].Enabled = false;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < _selectedEntry.Data.Count; i++)
-                {
-                    DataHeaders[i].Enabled = !string.IsNullOrEmpty(_selectedEntry.Data[i]);
-                }
-            }
-
-            // if current data header is disabled in the new entry
-            if (!DataHeaders[SelectedDataIndex].Enabled)
-            {
-                TextBoxEnabled = false;
-                // Select the first non-disabled data header
-                for (int i = 0; i < DataHeaders.Count; i++)
-                {
-                    if (DataHeaders[i].Enabled)
-                    {
-                        SelectedDataIndex = i;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                SelectData();
-            }
-        }
-    }
-
-    private HdatDiffEntry _selectedDiffEntry;
-    public HdatDiffEntry SelectedDiffEntry
-    {
-        get { return _selectedDiffEntry; }
-        set
-        {
-            _selectedDiffEntry = value;
-            NotifyPropertyChanged();
-
-            Debug.Assert(_selectedDiffEntry == null || (_selectedDiffEntry.Data1.Count == DataHeaders.Count && _selectedDiffEntry.Data2.Count == DataHeaders.Count));
-
-            for (int i = 0; i < _selectedDiffEntry.Data1.Count; i++)
-            {
-                DataHeaders[i].Enabled = !string.IsNullOrEmpty(_selectedDiffEntry.Data1[i]) || !string.IsNullOrEmpty(_selectedDiffEntry.Data2[i]);
-            }
-
-            // if current data header is disabled in the new entry
-            if (!DataHeaders[SelectedDataIndex].Enabled)
-            {
-                // Select the first non-disabled data header
-                for (int i = 0; i < DataHeaders.Count; i++)
-                {
-                    if (DataHeaders[i].Enabled)
-                    {
-                        SelectedDataIndex = i;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                SelectData();
-            }
-        }
-    }
-
-    private void SelectData()
-    {
-        if (TabControl.SelectedIndex == 0)
-        {
-            if (SelectedEntry is HdatEntry entry && DataHeaders[SelectedDataIndex].Enabled)
-            {
-                _editedData = entry.Data[SelectedDataIndex];
-                NotifyPropertyChanged(nameof(EditedData));
-                TextBoxEnabled = true;
-            }
-            else
-            {
-                _editedData = null;
-                NotifyPropertyChanged(nameof(EditedData));
-                TextBoxEnabled = false;
-            }
-        }
-        else if (TabControl.SelectedIndex == 1)
-        {
-            if (SelectedDiffEntry is HdatDiffEntry entry && DataHeaders[SelectedDataIndex].Enabled)
-            {
-                Diff1Data = entry.Data1[SelectedDataIndex];
-                Diff2Data = entry.Data2[SelectedDataIndex];
-            }
-        }
-    }
-
-    private string _editedData;
-    public string EditedData
-    {
-        get { return _editedData; }
-        set
-        {
-            Debug.Assert(TabControl.SelectedIndex == 0);
-            if (_editedData != value)
-            {
-                _editedData = value;
-                NotifyPropertyChanged();
-
-                if (SelectedEntry is HdatEntry entry && DataHeaders[SelectedDataIndex].Enabled)
-                {
-                    entry.Data[SelectedDataIndex] = _editedData;
-                }
-            }
-        }
-    }
-
-    private string _diff1Data;
-    public string Diff1Data
-    {
-        get { return _diff1Data; }
-        set { _diff1Data = value; NotifyPropertyChanged(); }
-    }
-
-    private string _diff2Data;
-    public string Diff2Data
-    {
-        get { return _diff2Data; }
-        set { _diff2Data = value; NotifyPropertyChanged(); }
-    }
-
-    private bool _textBoxEnabled;
-    public bool TextBoxEnabled
-    {
-        get { return _textBoxEnabled; }
-        set { _textBoxEnabled = value; NotifyPropertyChanged(); }
-    }
+    public static readonly DependencyProperty DiffVMProperty = DependencyProperty.Register(nameof(DiffVM), typeof(DiffViewModel), typeof(MainWindow));
 
     #endregion
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    private void NotifyPropertyChanged([CallerMemberName] string property = null)
-    {
-        if (property != null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
-    }
 
     #region Files
 
@@ -290,10 +112,9 @@ public partial class MainWindow : INotifyPropertyChanged
         var list = OpenFile(Open1250.IsChecked == true);
         if (list != null)
         {
-            Grbox.IsEnabled = true;
             _editFileName = list.FileName;
             SetEditTitle();
-            List = new ObservableCollection<HdatEntry>(list);
+            EditVM.List = new ObservableCollection<HdatEntry>(list);
         }
     }
 
@@ -312,12 +133,12 @@ public partial class MainWindow : INotifyPropertyChanged
 
             if (Save1251.IsChecked == true)
             {
-                Hdat.WriteFile(fileDialog.FileName, List, Encoding.GetEncoding("windows-1251"));
+                Hdat.WriteFile(fileDialog.FileName, EditVM.List, Encoding.GetEncoding("windows-1251"));
             }
 
             if (Save1250.IsChecked == true)
             {
-                Hdat.WriteFile(fileDialog.FileName, List, Encoding.GetEncoding("windows-1250"));
+                Hdat.WriteFile(fileDialog.FileName, EditVM.List, Encoding.GetEncoding("windows-1250"));
             }
         }
         catch (Exception ex)
@@ -396,7 +217,7 @@ public partial class MainWindow : INotifyPropertyChanged
                     var diffEntry = new HdatDiffEntry() { Name = entry1.Name };
                     var set = false;
 
-                    for (int j = 0; j < DataHeaders.Count; j++)
+                    for (int j = 0; j < DiffVM.DataHeaders.Count; j++)
                     {
                         if (entry1.Data[j] != entry2.Data[j])
                         {
@@ -414,13 +235,13 @@ public partial class MainWindow : INotifyPropertyChanged
 
                 if (diffList.Count > 0)
                 {
-                    DiffList = new ObservableCollection<HdatDiffEntry>(diffList);
+                    DiffVM.DiffList = new ObservableCollection<HdatDiffEntry>(diffList);
                 }
             }
         }
     }
 
-    private void ListViewItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (sender is ListViewItem item && item.DataContext is DataHeader header && !header.Enabled)
         {
@@ -485,14 +306,13 @@ public partial class MainWindow : INotifyPropertyChanged
         if (_diff1List != null)
         {
             TabControl.SelectedIndex = 0;
-            Grbox.IsEnabled = true;
             _editFileName = _diff1List.FileName;
             SetEditTitle();
-            List = new ObservableCollection<HdatEntry>(_diff1List);
+            EditVM.List = new ObservableCollection<HdatEntry>(_diff1List);
 
-            if (SelectedDiffEntry != null)
+            if (DiffVM.SelectedDiffEntry != null)
             {
-                SelectedEntry = _diff1List.FirstOrDefault((e) => e.Name == SelectedDiffEntry.Name);
+                EditVM.SelectedEntry = _diff1List.FirstOrDefault((e) => e.Name == DiffVM.SelectedDiffEntry.Name);
             }
         }
     }
@@ -511,13 +331,12 @@ public partial class MainWindow : INotifyPropertyChanged
         if (_diff2List != null)
         {
             TabControl.SelectedIndex = 0;
-            Grbox.IsEnabled = true;
             _editFileName = _diff2List.FileName;
             SetEditTitle();
-            List = new ObservableCollection<HdatEntry>(_diff2List);
-            if (SelectedDiffEntry != null)
+            EditVM.List = new ObservableCollection<HdatEntry>(_diff2List);
+            if (DiffVM.SelectedDiffEntry != null)
             {
-                SelectedEntry = _diff2List.FirstOrDefault((e) => e.Name == SelectedDiffEntry.Name);
+                EditVM.SelectedEntry = _diff2List.FirstOrDefault((e) => e.Name == DiffVM.SelectedDiffEntry.Name);
             }
         }
     }
@@ -554,25 +373,5 @@ public class HdatEntryNameEqualityComparer : IEqualityComparer<HdatEntry>
     public int GetHashCode([DisallowNull] HdatEntry obj)
     {
         return obj.Name?.GetHashCode() ?? 0;
-    }
-}
-
-public class SimpleCommand(Func<object, bool> canExecute, Action<object> execute) : ICommand
-{
-    public SimpleCommand(Action<object> execute) : this(null, execute) { }
-
-    private readonly Func<object, bool> _canExecute = canExecute ?? new Func<object, bool>(param => true);
-    private readonly Action<object> _execute = execute;
-
-    public event EventHandler CanExecuteChanged;
-
-    public bool CanExecute(object parameter)
-    {
-        return _canExecute.Invoke(parameter);
-    }
-
-    public void Execute(object parameter)
-    {
-        _execute.Invoke(parameter);
     }
 }
