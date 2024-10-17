@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using HotA_editor.Data;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace HotA_editor.ViewModels;
 
 public class EditViewModel : TabViewModelBase
 {
+    #region Properties
+
     private ObservableCollection<HdatEntry> _list = [];
     public ObservableCollection<HdatEntry> List
     {
@@ -81,6 +84,16 @@ public class EditViewModel : TabViewModelBase
         set { NotifyingSet(ref _textBoxEnabled, value); }
     }
 
+    #endregion
+
+    #region Commands
+
+
+
+    #endregion
+
+    #region Methods
+
     protected override void SelectData()
     {
         if (SelectedEntry is HdatEntry entry && DataHeaders[SelectedDataIndex].Enabled)
@@ -96,4 +109,6 @@ public class EditViewModel : TabViewModelBase
             TextBoxEnabled = false;
         }
     }
+
+    #endregion
 }

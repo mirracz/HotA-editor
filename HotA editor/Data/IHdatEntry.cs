@@ -1,4 +1,4 @@
-﻿namespace HotA_editor;
+﻿namespace HotA_editor.Data;
 
 public interface IHdatEntry
 {

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace HotA_editor;
+namespace HotA_editor.Data;
 
 public class HdatDiffEntry : INotifyPropertyChanged, IHdatEntry
 {

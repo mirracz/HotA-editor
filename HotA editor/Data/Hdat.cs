@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 
-namespace HotA_editor;
+namespace HotA_editor.Data;
 
 class Hdat
 {

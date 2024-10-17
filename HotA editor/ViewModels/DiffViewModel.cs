@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using HotA_editor.Data;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace HotA_editor.ViewModels;
 
 public class DiffViewModel : TabViewModelBase
 {
+    #region Properties
+
     private ObservableCollection<HdatDiffEntry> _diffList = [];
     public ObservableCollection<HdatDiffEntry> DiffList
     {
@@ -61,6 +64,16 @@ public class DiffViewModel : TabViewModelBase
         set { NotifyingSet(ref _diff2Data, value); }
     }
 
+    #endregion
+
+    #region Commands
+
+
+
+    #endregion
+
+    #region Methods
+
     protected override void SelectData()
     {
         if (SelectedDiffEntry != null && DataHeaders[SelectedDataIndex].Enabled)
@@ -69,4 +82,6 @@ public class DiffViewModel : TabViewModelBase
             Diff2Data = SelectedDiffEntry.Data2[SelectedDataIndex];
         }
     }
+
+    #endregion
 }
